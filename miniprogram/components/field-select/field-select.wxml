@@ -1,0 +1,9 @@
+<view class="field-select">
+  <view class="field-label"><text wx:if="{{required}}" class="required">*</text><text>{{label}}</text></view>
+  <picker bindchange="onPickerChange" value="{{selectedIndex}}" range="{{optionLabels}}" mode="selector">
+    <view class="picker {{value ? '' : 'placeholder'}}">
+      {{value ? selectedLabel : placeholder}}
+      <text class="arrow">▾</text>
+    </view>
+  </picker>
+</view>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创维智慧酒店 - 管理后台</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Login Page -->
+    <div v-if="currentPage === 'login'">
+      <el-card class="login-card">
+        <h2 class="login-title">创维智慧酒店管理后台</h2>
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-width="0">
+          <el-form-item prop="username">
+            <el-input v-model="loginForm.username" placeholder="用户名" prefix-icon="User" />
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="loginForm.password" type="password" placeholder="密码" prefix-icon="Lock" show-password />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleLogin" :loading="loginLoading" style="width:100%">登 录</el-button>
+          </el-form-item>
+        </el-form>
+        <p class="login-hint">默认账号: admin / admin123</p>
+      </el-card>
+    </div>
+
+    <!-- Main Layout -->
+    <div v-else class="main-layout">
+      <el-container style="height:100vh">
+        <el-aside width="220px" class="aside">
+          <div class="aside-header">创维智慧酒店</div>
+          <el-menu :default-active="currentPage" @select="navigate" background-color="#001529" text-color="#fff" active-text-color="#409eff">
+            <el-menu-item index="dashboard"><el-icon><DataBoard /></el-icon><span>统计看板</span></el-menu-item>
+            <el-menu-item index="records"><el-icon><Document /></el-icon><span>提交记录</span></el-menu-item>
+            <el-menu-item index="templates"><el-icon><Setting /></el-icon><span>表单管理</span></el-menu-item>
+            <el-menu-item index="settings"><el-icon><User /></el-icon><span>系统设置</span></el-menu-item>
+          </el-menu>
+        </el-aside>
+        <el-container>
+          <el-header class="header">
+            <span>欢迎回来, {{adminInfo.username}}</span>
+            <el-button type="danger" size="small" @click="handleLogout">退出登录</el-button>
+          </el-header>
+          <el-main class="main">
+            <!-- Dashboard -->
+            <div v-if="currentPage === 'dashboard'">
+              <dashboard-page ref="page" />
+            </div>
+            <!-- Records -->
+            <div v-if="currentPage === 'records'">
+              <records-page ref="page" />
+            </div>
+            <!-- Record Detail -->
+            <div v-if="currentPage === 'record-detail'">
+              <record-detail-page ref="page" :record-id="pageParams.recordId" @back="currentPage='records'" />
+            </div>
+            <!-- Form Templates -->
+            <div v-if="currentPage === 'templates'">
+              <template-list-page ref="page" @edit="openTemplateEditor" @edit-step="openStepEditor" />
+            </div>
+            <!-- Template Editor -->
+            <div v-if="currentPage === 'template-edit'">
+              <template-edit-page ref="page" :template-id="pageParams.templateId" @back="currentPage='templates'" @edit-step="openStepEditor" />
+            </div>
+            <!-- Step Editor -->
+            <div v-if="currentPage === 'step-edit'">
+              <step-edit-page ref="page" :template-id="pageParams.templateId" :step-id="pageParams.stepId" @back="openTemplateEditor(pageParams.templateId)" />
+            </div>
+            <!-- Settings -->
+            <div v-if="currentPage === 'settings'">
+              <settings-page ref="page" />
+            </div>
+          </el-main>
+        </el-container>
+      </el-container>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://unpkg.com/element-plus"></script>
+  <script src="https://unpkg.com/@element-plus/icons-vue"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pages/dashboard/dashboard.js"></script>
+  <script src="js/pages/records/record-list/record-list.js"></script>
+  <script src="js/pages/records/record-detail/record-detail.js"></script>
+  <script src="js/pages/form-templates/template-list/template-list.js"></script>
+  <script src="js/pages/form-templates/template-edit/template-edit.js"></script>
+  <script src="js/pages/form-templates/step-edit/step-edit.js"></script>
+  <script src="js/pages/settings/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

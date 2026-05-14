@@ -1,0 +1,75 @@
+<!-- 5步表单编辑核心页面 -->
+<view class="page">
+  <!-- Loading -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text>加载表单配置...</text>
+  </view>
+
+  <view wx:else>
+    <!-- 步骤进度条 -->
+    <step-progress
+      steps="{{steps}}"
+      currentStep="{{currentStep}}"
+    />
+
+    <!-- 表单内容区域 -->
+    <view class="form-content">
+      <!-- 当前步骤标题 -->
+      <view class="step-section">
+        <text class="step-title">{{currentStepData.title}}</text>
+        <text wx:if="{{currentStepData.description}}" class="step-desc">
+          {{currentStepData.description}}
+        </text>
+      </view>
+
+      <!-- 字段渲染区域 -->
+      <view class="fields-area">
+        <view
+          wx:for="{{visibleFields}}"
+          wx:key="id"
+          wx:for-index="idx"
+        >
+          <field-renderer
+            field="{{item}}"
+            value="{{formValues[item.field_key]}}"
+            bind:change="onFieldChange"
+            data-field-key="{{item.field_key}}"
+          />
+
+          <!-- Validation error -->
+          <view wx:if="{{fieldErrors[item.field_key]}}" class="field-error">
+            <text>{{fieldErrors[item.field_key]}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-bar">
+      <button
+        wx:if="{{currentStep > 1}}"
+        class="btn btn-prev"
+        bindtap="prevStep"
+      >上一步</button>
+
+      <view class="action-right">
+        <button
+          class="btn btn-save"
+          bindtap="saveDraft"
+        >保存草稿</button>
+
+        <button
+          wx:if="{{currentStep < totalSteps}}"
+          class="btn btn-next"
+          bindtap="nextStep"
+        >下一步</button>
+
+        <button
+          wx:else
+          class="btn btn-submit"
+          bindtap="previewSubmit"
+        >预览提交</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,13 @@
+/** 记录列表样式 */
+.page { min-height: 100vh; background: #f5f5f5; }
+.tabs { display: flex; background: #fff; padding: 16rpx; margin-bottom: 8rpx; }
+.tab { flex: 1; text-align: center; padding: 16rpx; font-size: 28rpx; color: #666; border-radius: 8rpx; }
+.tab-active { background: #e3f2fd; color: #1a73e8; font-weight: 600; }
+.record-card { background: #fff; margin: 16rpx 20rpx; padding: 32rpx; border-radius: 16rpx; position: relative; }
+.record-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12rpx; }
+.record-sn { font-size: 28rpx; font-weight: 600; color: #333; }
+.record-date { font-size: 24rpx; color: #999; }
+.record-arrow { position: absolute; right: 32rpx; top: 50%; transform: translateY(-50%); font-size: 40rpx; color: #ccc; }
+.empty { display: flex; flex-direction: column; align-items: center; padding: 200rpx 0; }
+.empty-icon { font-size: 100rpx; margin-bottom: 20rpx; }
+.empty-text { font-size: 28rpx; color: #999; }

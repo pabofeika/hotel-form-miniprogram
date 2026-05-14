@@ -1,0 +1,7 @@
+.field-multi-select { margin-bottom: 8rpx; }
+.field-label { font-size: 28rpx; color: #333; font-weight: 500; margin-bottom: 16rpx; }
+.required { color: #d32f2f; margin-right: 4rpx; }
+.options { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.option { display: flex; align-items: center; padding: 16rpx 24rpx; border: 2rpx solid #e0e0e0; border-radius: 12rpx; font-size: 26rpx; color: #555; }
+.option.selected { border-color: #1a73e8; background: #e3f2fd; color: #1a73e8; }
+.checkmark { margin-left: 8rpx; font-size: 24rpx; font-weight: 700; }

@@ -1,0 +1,213 @@
+const api = require('../../utils/api');
+const cache = require('../../utils/cache');
+const { evaluateConditions } = require('../../utils/condition-engine');
+const { validateForm } = require('../../utils/validator');
+
+Page({
+  data: {
+    loading: true,
+    formId: null,
+    template: null,
+    steps: [],
+    currentStep: 1,
+    totalSteps: 0,
+    currentStepData: {},
+    visibleFields: [],
+    formValues: {},
+    fieldErrors: {},
+    hasUnsavedChanges: false,
+  },
+
+  onLoad(options) {
+    const formId = parseInt(options.formId);
+    const resume = options.resume === 'true';
+
+    this.setData({ formId });
+
+    // 自动登录
+    this.ensureLogin().then(() => {
+      this.loadFormTemplate(formId, resume);
+    });
+  },
+
+  async ensureLogin() {
+    const app = getApp();
+    if (!app.globalData.token) {
+      await app.login();
+    }
+  },
+
+  async loadFormTemplate(formId, resume) {
+    try {
+      // Try cache first
+      let template = cache.getCachedFormStructure(formId);
+      if (!template) {
+        template = await api.get(`/forms/${formId}`);
+        cache.cacheFormStructure(formId, template);
+      }
+
+      const steps = template.steps.map((s, i) => ({
+        ...s,
+        index: i + 1,
+      }));
+
+      this.setData({
+        template,
+        steps,
+        totalSteps: steps.length,
+        currentStepData: steps[0] || {},
+      });
+
+      // Check for draft
+      if (resume) {
+        const draft = cache.getFormDraft(formId);
+        if (draft) {
+          this.setData({
+            formValues: draft.data.formValues || {},
+            currentStep: draft.currentStep || 1,
+          });
+          // Update current step data
+          const step = steps.find(s => s.step_number === this.data.currentStep);
+          if (step) {
+            this.setData({ currentStepData: step });
+          }
+        }
+      }
+
+      // Render fields for current step
+      this.renderCurrentFields();
+
+      this.setData({ loading: false });
+    } catch (err) {
+      wx.showToast({ title: err.message || '加载失败', icon: 'none' });
+      this.setData({ loading: false });
+    }
+  },
+
+  renderCurrentFields() {
+    const { steps, currentStep, formValues } = this.data;
+    const step = steps.find(s => s.step_number === currentStep);
+    if (!step || !step.fields) {
+      this.setData({ visibleFields: [] });
+      return;
+    }
+
+    // Filter fields based on conditions
+    const visibleFields = step.fields.filter(field => {
+      let conditionsObj = null;
+      if (typeof field.conditions === 'string') {
+        try { conditionsObj = JSON.parse(field.conditions); }
+        catch (e) { conditionsObj = null; }
+      } else {
+        conditionsObj = field.conditions;
+      }
+
+      if (conditionsObj) {
+        return evaluateConditions(conditionsObj, formValues);
+      }
+      return true;
+    });
+
+    this.setData({ visibleFields });
+  },
+
+  onFieldChange(e) {
+    const { field_key } = e.currentTarget.dataset;
+    const value = e.detail;
+
+    const formValues = { ...this.data.formValues, [field_key]: value };
+    this.setData({
+      formValues,
+      hasUnsavedChanges: true,
+      // Clear field error
+      fieldErrors: { ...this.data.fieldErrors, [field_key]: '' },
+    });
+
+    // Re-render fields (conditions may change)
+    this.renderCurrentFields();
+  },
+
+  prevStep() {
+    if (this.data.currentStep <= 1) return;
+    const step = this.data.currentStep - 1;
+    this.setData({ currentStep: step });
+    const stepData = this.data.steps.find(s => s.step_number === step);
+    this.setData({ currentStepData: stepData || {} });
+    this.renderCurrentFields();
+  },
+
+  nextStep() {
+    const { visibleFields, formValues, currentStep, totalSteps } = this.data;
+
+    // Validate current step
+    const result = validateForm(formValues, visibleFields, false);
+    if (!result.valid) {
+      const errors = {};
+      result.errors.forEach(e => { errors[e.field] = e.message; });
+      this.setData({ fieldErrors: errors });
+      wx.showToast({ title: '请完善当前步骤', icon: 'none' });
+      return;
+    }
+
+    if (currentStep < totalSteps) {
+      const step = currentStep + 1;
+      this.setData({
+        currentStep: step,
+        fieldErrors: {},
+      });
+      const stepData = this.data.steps.find(s => s.step_number === step);
+      this.setData({ currentStepData: stepData || {} });
+      this.renderCurrentFields();
+    }
+  },
+
+  saveDraft() {
+    const { formId, formValues, currentStep } = this.data;
+    cache.saveFormDraft(formId, { formValues, currentStep });
+    this.setData({ hasUnsavedChanges: false });
+    wx.showToast({ title: '草稿已保存', icon: 'success' });
+  },
+
+  previewSubmit() {
+    // Validate all visible fields in all steps
+    const allFields = [];
+    this.data.steps.forEach(step => {
+      if (step.fields) {
+        step.fields.forEach(f => {
+          let conditionsObj = null;
+          if (typeof f.conditions === 'string') {
+            try { conditionsObj = JSON.parse(f.conditions); } catch (e) {}
+          } else {
+            conditionsObj = f.conditions;
+          }
+          if (!conditionsObj || evaluateConditions(conditionsObj, this.data.formValues)) {
+            allFields.push(f);
+          }
+        });
+      }
+    });
+
+    const result = validateForm(this.data.formValues, allFields, false);
+    if (!result.valid) {
+      const errors = {};
+      result.errors.forEach(e => { errors[e.field] = e.message; });
+      this.setData({ fieldErrors: errors });
+      wx.showToast({ title: '请完善所有必填项', icon: 'none' });
+      return;
+    }
+
+    // Clear draft and navigate to preview
+    cache.clearDraft(this.data.formId);
+
+    wx.navigateTo({
+      url: `/pages/form-preview/form-preview?formId=${this.data.formId}&formValues=${encodeURIComponent(JSON.stringify(this.data.formValues))}`,
+    });
+  },
+
+  onHide() {
+    // Auto-save draft when leaving
+    if (this.data.hasUnsavedChanges) {
+      this.saveDraft();
+    }
+  },
+});

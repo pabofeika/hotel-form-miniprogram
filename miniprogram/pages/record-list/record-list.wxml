@@ -1,0 +1,28 @@
+<!-- 我的提交列表 -->
+<view class="page">
+  <!-- Status tabs -->
+  <view class="tabs">
+    <view wx:for="{{statusTabs}}" wx:key="value"
+      class="tab {{currentStatus === item.value ? 'tab-active' : ''}}"
+      bindtap="switchTab" data-value="{{item.value}}"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- Records -->
+  <view wx:if="{{records.length > 0}}" class="record-list">
+    <view wx:for="{{records}}" wx:key="id" class="record-card" bindtap="viewDetail" data-id="{{item.id}}">
+      <view class="record-header">
+        <text class="record-sn">{{item.record_sn}}</text>
+        <text class="badge badge-{{item.status}}">{{formatStatus(item.status)}}</text>
+      </view>
+      <text class="record-date">{{formatDate(item.created_at)}}</text>
+      <text class="record-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- Empty -->
+  <view wx:else class="empty">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无提交记录</text>
+  </view>
+</view>

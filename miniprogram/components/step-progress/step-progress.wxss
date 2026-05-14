@@ -1,0 +1,87 @@
+/** 步骤进度条样式 */
+.step-progress {
+  padding: 32rpx 20rpx 8rpx;
+  background: #fff;
+}
+
+.step-dots {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20rpx;
+  position: relative;
+  margin-bottom: 16rpx;
+}
+
+/* Progress line connecting dots */
+.step-dots::before {
+  content: '';
+  position: absolute;
+  top: 20rpx;
+  left: 60rpx;
+  right: 60rpx;
+  height: 4rpx;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.step-dots .step-dot.completed ~ .step-dot.completed::before,
+.step-dots .step-dot.completed::before {
+  background: #1a73e8;
+}
+
+.step-dot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dot {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-dot.active .dot {
+  background: #1a73e8;
+  box-shadow: 0 0 0 6rpx rgba(26,115,232,0.2);
+}
+
+.step-dot.completed .dot {
+  background: #1a73e8;
+}
+
+.step-num {
+  position: absolute;
+  top: 8rpx;
+  font-size: 20rpx;
+  color: #fff;
+  font-weight: 600;
+}
+
+.step-names {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10rpx;
+}
+
+.step-name {
+  font-size: 20rpx;
+  color: #999;
+  text-align: center;
+  width: 20%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.step-name.active {
+  color: #1a73e8;
+  font-weight: 600;
+}

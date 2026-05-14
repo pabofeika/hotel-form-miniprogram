@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "step-progress": "../../components/step-progress/step-progress",
+    "field-renderer": "../../components/field-renderer/field-renderer"
+  }
+}

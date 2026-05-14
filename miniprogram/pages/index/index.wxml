@@ -1,0 +1,47 @@
+<!-- 首页 - 表单模板列表 -->
+<view class="page">
+  <!-- Loading -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 表单列表 -->
+  <view wx:else class="form-list">
+    <view class="page-header">
+      <text class="page-title">创维商用智慧酒店</text>
+      <text class="page-subtitle">填写配置信息，创达管理后台</text>
+    </view>
+
+    <!-- 草稿提示 -->
+    <view wx:if="{{hasDraft}}" class="draft-banner" bindtap="resumeDraft">
+      <text class="draft-icon">📝</text>
+      <text class="draft-text">您有未提交的草稿，点击继续填写</text>
+      <text class="draft-arrow">›</text>
+    </view>
+
+    <!-- 表单模板卡片 -->
+    <view
+      wx:for="{{forms}}"
+      wx:key="id"
+      class="form-card"
+      bindtap="startForm"
+      data-id="{{item.id}}"
+    >
+      <view class="card-header">
+        <text class="card-title">{{item.title}}</text>
+        <text class="card-version">v{{item.version}}</text>
+      </view>
+      <text class="card-desc">{{item.description}}</text>
+      <view class="card-footer">
+        <text class="card-date">{{item.created_at}}</text>
+        <text class="card-action">开始填写 ›</text>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{forms.length === 0 && !loading}}" class="empty">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无可填写的表单</text>
+    </view>
+  </view>
+</view>

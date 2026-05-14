@@ -1,0 +1,31 @@
+{
+  "name": "hotel-form-server",
+  "version": "1.0.0",
+  "description": "创维商用智慧酒店 - 表单提交后端服务",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "knex migrate:latest --knexfile src/config/knexfile.js",
+    "migrate:rollback": "knex migrate:rollback --knexfile src/config/knexfile.js",
+    "seed": "knex seed:run --knexfile src/config/knexfile.js",
+    "setup": "npm run migrate && npm run seed"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "knex": "^3.0.1",
+    "better-sqlite3": "^9.4.3",
+    "mysql2": "^3.6.5",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "axios": "^1.6.2",
+    "multer": "^1.4.5-lts.1",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "express-rate-limit": "^7.1.4",
+    "uuid": "^9.0.0",
+    "dotenv": "^16.3.1",
+    "winston": "^3.11.0"
+  }
+}

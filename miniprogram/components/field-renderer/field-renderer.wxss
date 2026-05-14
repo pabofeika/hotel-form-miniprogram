@@ -1,0 +1,19 @@
+/** 字段渲染器样式 */
+.field-wrapper {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 16rpx;
+}
+
+.help-text {
+  display: block;
+  font-size: 22rpx;
+  color: #888;
+  margin-top: 12rpx;
+  line-height: 1.5;
+  padding: 12rpx 16rpx;
+  background: #fafafa;
+  border-radius: 8rpx;
+  border-left: 4rpx solid #1a73e8;
+}

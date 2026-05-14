@@ -1,0 +1,7 @@
+<view class="field-input">
+  <view class="field-label">
+    <text wx:if="{{required}}" class="required">*</text>
+    <text>{{label}}</text>
+  </view>
+  <input class="input" type="text" value="{{value}}" placeholder="{{placeholder}}" bindinput="onInput" />
+</view>

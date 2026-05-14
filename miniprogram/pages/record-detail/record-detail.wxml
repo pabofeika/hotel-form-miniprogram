@@ -1,0 +1,41 @@
+<!-- 提交记录详情 + 查看反馈 -->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view wx:else class="content">
+    <!-- Record header -->
+    <view class="record-header">
+      <text class="record-sn">{{record.record_sn}}</text>
+      <text class="badge badge-{{record.status}}">{{formatStatus(record.status)}}</text>
+    </view>
+
+    <!-- Form values -->
+    <view class="section">
+      <text class="section-title">填写内容</text>
+      <view wx:for="{{formSteps}}" wx:key="id" class="step-values">
+        <text class="step-label">{{item.title}}</text>
+        <view wx:for="{{item.fields}}" wx:key="id" class="value-row" wx:if="{{item.visible}}">
+          <text class="value-label">{{item.label}}</text>
+          <text class="value-text">{{formatValue(item)}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Feedback section -->
+    <view class="section">
+      <text class="section-title">管理员反馈</text>
+      <view wx:if="{{feedbacks.length > 0}}">
+        <view wx:for="{{feedbacks}}" wx:key="id" class="feedback-item">
+          <view class="feedback-header">
+            <text class="feedback-admin">{{item.admin_name}}</text>
+            <text class="feedback-date">{{formatDate(item.created_at)}}</text>
+          </view>
+          <text class="feedback-content">{{item.content}}</text>
+        </view>
+      </view>
+      <view wx:else class="no-feedback">
+        <text>暂无反馈</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,12 @@
+{
+  "component": true,
+  "usingComponents": {
+    "field-input": "../field-input/field-input",
+    "field-textarea": "../field-textarea/field-textarea",
+    "field-number": "../field-number/field-number",
+    "field-email": "../field-email/field-email",
+    "field-select": "../field-select/field-select",
+    "field-multi-select": "../field-multi-select/field-multi-select",
+    "field-file": "../field-file/field-file"
+  }
+}
