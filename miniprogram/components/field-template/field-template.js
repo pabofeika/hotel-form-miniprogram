@@ -1,25 +1,19 @@
 Component({
   properties: {
-    label: { type: null, value: '' },
-    required: { type: null, value: false },
-    value: { type: null, value: '' },
     options: { type: Array, value: [] },
+    value: { type: null, value: '' },
   },
 
-  data: {
-    selectedValue: '',
-  },
+  data: { currentValue: '' },
 
   observers: {
-    value(v) {
-      this.setData({ selectedValue: v || '' });
-    },
+    value(v) { this.setData({ currentValue: v || '' }); },
   },
 
   methods: {
     onSelect(e) {
       const val = e.currentTarget.dataset.value;
-      this.setData({ selectedValue: val });
+      this.setData({ currentValue: val });
       this.triggerEvent('change', val);
     },
   },

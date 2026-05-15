@@ -1,5 +1,4 @@
 <view class="field-file">
-  <view class="field-label"><text wx:if="{{required}}" class="required">*</text><text>{{label}}</text></view>
   <view class="upload-area" bindtap="chooseFile">
     <text wx:if="{{!fileName}}" class="upload-placeholder">{{placeholder}}</text>
     <view wx:else class="uploaded-file">

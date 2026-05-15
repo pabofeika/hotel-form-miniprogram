@@ -1,4 +1,3 @@
 <view class="field-textarea">
-  <view class="field-label"><text wx:if="{{required}}" class="required">*</text><text>{{label}}</text></view>
   <textarea class="textarea" placeholder="{{placeholder}}" bindinput="onInput" auto-height maxlength="500" />
 </view>
