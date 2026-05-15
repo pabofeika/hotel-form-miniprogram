@@ -6,7 +6,8 @@ Component({
     value: { type: String, value: '' },
   },
   data: { inputValue: '' },
-  observers: { value(v) { this.setData({ inputValue: v || '' }); } },
+  attached() { this.setData({ inputValue: this.properties.value || '' }); },
+  observers: { value(v) { if (v !== this.data.inputValue) this.setData({ inputValue: v || '' }); } },
   methods: {
     onInput(e) { const val = e.detail.value; this.setData({ inputValue: val }); this.triggerEvent('change', val); },
   },

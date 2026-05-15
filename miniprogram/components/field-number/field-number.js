@@ -6,7 +6,8 @@ Component({
     value: { type: null, value: '' },
   },
   data: { inputValue: '' },
-  observers: { value(v) { this.setData({ inputValue: v !== undefined && v !== null ? String(v) : '' }); } },
+  attached() { this.setData({ inputValue: this.properties.value !== undefined && this.properties.value !== null ? String(this.properties.value) : '' }); },
+  observers: { value(v) { const s = v !== undefined && v !== null ? String(v) : ''; if (s !== this.data.inputValue) this.setData({ inputValue: s }); } },
   methods: {
     onInput(e) { const val = e.detail.value; this.setData({ inputValue: val }); this.triggerEvent('change', val); },
   },

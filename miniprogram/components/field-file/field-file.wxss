@@ -1,6 +1,6 @@
 .field-file { margin-bottom: 0; }
-.upload-area { padding: 40rpx; border: 2rpx dashed #d0d0d0; border-radius: 16rpx; text-align: center; background: #fafafa; }
-.upload-placeholder { font-size: 26rpx; color: #bbb; }
+.upload-area { padding: 48rpx; border: 2rpx dashed #d0d0d0; border-radius: 18rpx; text-align: center; background: #fafafa; }
+.upload-placeholder { font-size: 28rpx; color: #bbb; }
 .uploaded-file { display: flex; align-items: center; justify-content: space-between; }
-.file-name { font-size: 26rpx; color: #333; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.file-status { font-size: 24rpx; color: #389e0d; background: #f6ffed; padding: 6rpx 16rpx; border-radius: 10rpx; }
+.file-name { font-size: 28rpx; color: #333; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-status { font-size: 26rpx; color: #389e0d; background: #f6ffed; padding: 6rpx 18rpx; border-radius: 10rpx; }

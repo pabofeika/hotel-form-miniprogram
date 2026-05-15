@@ -1,5 +1,5 @@
 .field-multi-select { margin-bottom: 0; }
 .options { display: flex; flex-wrap: wrap; gap: 20rpx; }
-.option { display: flex; align-items: center; padding: 20rpx 28rpx; border: 2rpx solid #e8e8e8; border-radius: 14rpx; font-size: 26rpx; color: #555; background: #fafafa; }
-.option.selected { border-color: #1a73e8; background: #e8f0fe; color: #1a73e8; font-weight: 500; }
-.checkmark { margin-left: 8rpx; font-size: 24rpx; font-weight: 700; }
+.option { display: flex; align-items: center; padding: 24rpx 32rpx; border: 2rpx solid #e0e0e0; border-radius: 16rpx; font-size: 28rpx; color: #555; background: #fafafa; }
+.option.selected { border-color: #1a73e8; background: #e8f0fe; color: #1a73e8; font-weight: 600; }
+.checkmark { margin-left: 8rpx; font-size: 28rpx; font-weight: 700; }
