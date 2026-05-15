@@ -1,11 +1,18 @@
-/** 个人中心 */
-.page { min-height: 100vh; background: #f5f7fa; }
-.user-card { background: linear-gradient(135deg, #1a73e8, #0d47a1); padding: 80rpx 32rpx 60rpx; text-align: center; color: #fff; border-radius: 0 0 40rpx 40rpx; }
-.avatar { font-size: 120rpx; margin-bottom: 16rpx; display: block; }
-.user-name { font-size: 36rpx; font-weight: 700; display: block; margin-bottom: 8rpx; }
-.user-desc { font-size: 24rpx; opacity: 0.8; display: block; }
-.menu-list { margin: 32rpx 24rpx; background: #fff; border-radius: 20rpx; overflow: hidden; box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04); }
-.menu-item { display: flex; justify-content: space-between; align-items: center; padding: 36rpx; border-bottom: 2rpx solid #f5f5f5; font-size: 28rpx; }
+/** 个人中心 - 简洁卡片式 */
+.page { min-height: 100vh; background: var(--color-bg); }
+
+/* 用户卡片 */
+.user-card { background: var(--color-primary-gradient); padding: 80rpx 36rpx 60rpx; text-align: center; color: #fff; border-radius: 0 0 40rpx 40rpx; position: relative; overflow: hidden; }
+.user-card::after { content: ''; position: absolute; bottom: -60rpx; left: -40rpx; width: 240rpx; height: 240rpx; background: rgba(255,255,255,0.05); border-radius: 50%; }
+.avatar { font-size: 100rpx; margin-bottom: 8rpx; display: block; position: relative; z-index: 1; }
+.user-name { font-size: var(--font-size-2xl); font-weight: 800; display: block; margin-bottom: 6rpx; position: relative; z-index: 1; }
+.user-desc { font-size: 22rpx; opacity: 0.75; display: block; position: relative; z-index: 1; }
+
+/* 菜单列表 */
+.menu-list { margin: var(--space-xl) var(--space-lg); background: var(--color-bg-card); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-sm); border: 1rpx solid rgba(0,0,0,0.03); }
+.menu-item { display: flex; justify-content: space-between; align-items: center; padding: var(--space-xl) var(--space-lg); border-bottom: 1rpx solid var(--color-border); font-size: var(--font-size-base); color: var(--color-text-primary); }
 .menu-item:last-child { border-bottom: none; }
-.menu-arrow { font-size: 36rpx; color: #ddd; }
-.version-info { text-align: center; padding: 60rpx; font-size: 24rpx; color: #bbb; }
+.menu-item:active { background: var(--color-bg); }
+.menu-arrow { font-size: 36rpx; color: var(--color-border); }
+
+.version-info { text-align: center; padding: 60rpx; font-size: 20rpx; color: var(--color-text-tertiary); }

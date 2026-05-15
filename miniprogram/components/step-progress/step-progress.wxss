@@ -1,11 +1,14 @@
-.step-progress { padding: 36rpx 24rpx 16rpx; background: #fff; border-bottom: 2rpx solid #f0f0f0; }
-.step-dots { display: flex; justify-content: space-between; align-items: center; padding: 0 20rpx; position: relative; margin-bottom: 20rpx; }
-.step-dots::before { content: ''; position: absolute; top: 20rpx; left: 60rpx; right: 60rpx; height: 4rpx; background: #e8e8e8; z-index: 0; }
+/** 步骤进度条 - 渐变圆点流线型 */
+.step-progress { padding: var(--space-xl) var(--space-lg) var(--space-md); background: var(--color-bg-card); border-bottom: 1rpx solid var(--color-border); }
+.step-dots { display: flex; justify-content: space-between; align-items: center; padding: 0 20rpx; position: relative; margin-bottom: 16rpx; }
+.step-dots::before { content: ''; position: absolute; top: 18rpx; left: 60rpx; right: 60rpx; height: 4rpx; background: var(--color-border); z-index: 0; border-radius: 2rpx; }
+
 .step-dot { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-.dot { width: 44rpx; height: 44rpx; border-radius: 50%; background: #e8e8e8; display: flex; align-items: center; justify-content: center; }
-.step-dot.active .dot { background: linear-gradient(135deg, #1a73e8, #0d47a1); box-shadow: 0 0 0 8rpx rgba(26,115,232,0.15); }
-.step-dot.completed .dot { background: #1a73e8; }
-.step-num { position: absolute; top: 10rpx; font-size: 20rpx; color: #fff; font-weight: 700; }
-.step-names { display: flex; justify-content: space-between; padding: 0 10rpx; }
-.step-name { font-size: 20rpx; color: #bbb; text-align: center; width: 20%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.step-name.active { color: #1a73e8; font-weight: 600; }
+.dot { width: 40rpx; height: 40rpx; border-radius: var(--radius-full); background: var(--color-border); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+.step-dot.active .dot { background: var(--color-primary-gradient); box-shadow: 0 0 0 6rpx rgba(37,99,235,0.15); }
+.step-dot.completed .dot { background: var(--color-primary); }
+.step-num { position: absolute; top: 8rpx; font-size: 18rpx; color: #fff; font-weight: 800; }
+
+.step-names { display: flex; justify-content: space-between; padding: 0 6rpx; }
+.step-name { font-size: 18rpx; color: var(--color-text-tertiary); text-align: center; width: 20%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.step-name.active { color: var(--color-primary); font-weight: 700; }

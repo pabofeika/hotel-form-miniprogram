@@ -1,20 +1,13 @@
-/** 表单编辑页 - 全面UI升级 */
-.page { min-height: 100vh; padding-bottom: 180rpx; background: #f5f7fa; }
-.loading-container { display: flex; justify-content: center; align-items: center; height: 500rpx; font-size: 28rpx; color: #999; }
-.form-content { padding-bottom: 40rpx; }
-.fields-area { padding: 0 24rpx; }
+/** 表单编辑页 - 步骤式沉浸填写体验 */
+.page { min-height: 100vh; padding-bottom: 200rpx; background: var(--color-bg); }
+.loading-container { display: flex; justify-content: center; align-items: center; height: 500rpx; font-size: var(--font-size-base); color: var(--color-text-tertiary); }
 
-/* 字段错误提示 */
-.field-error { margin: -12rpx 8rpx 16rpx; padding: 12rpx 20rpx; background: #fff1f0; border-radius: 10rpx; border-left: 6rpx solid #ff4d4f; }
-.field-error text { font-size: 24rpx; color: #cf1322; }
+.fields-area { padding: 0; }
 
-/* 底部操作栏 - 圆角悬浮 */
-.action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 24rpx 32rpx 44rpx; background: #fff; box-shadow: 0 -6rpx 24rpx rgba(0,0,0,0.08); border-radius: 24rpx 24rpx 0 0; z-index: 100; }
-.action-right { display: flex; gap: 16rpx; margin-left: auto; }
+/* 字段错误浮层 */
+.field-error { margin: -8rpx var(--space-lg) var(--space-md); padding: var(--space-xs) var(--space-md); background: var(--color-error-bg); border-radius: var(--radius-sm); border-left: 4rpx solid var(--color-error); }
+.field-error text { font-size: var(--font-size-xs); color: var(--color-error); font-weight: 500; }
 
-.btn { padding: 24rpx 40rpx; border-radius: 16rpx; font-size: 28rpx; font-weight: 600; border: none; text-align: center; line-height: 1.4; transition: all 0.2s; }
-.btn:active { transform: scale(0.96); }
-.btn-prev { background: #f5f5f5; color: #666; }
-.btn-save { background: #fff; color: #1a73e8; border: 2rpx solid #1a73e8; }
-.btn-next { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: #fff; box-shadow: 0 4rpx 16rpx rgba(26,115,232,0.3); }
-.btn-submit { background: linear-gradient(135deg, #52c41a, #389e0d); color: #fff; box-shadow: 0 4rpx 16rpx rgba(82,196,26,0.3); }
+/* 底部悬浮操作栏 - 毛玻璃效果 */
+.action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: var(--space-md) var(--space-lg) 48rpx; background: rgba(255,255,255,0.92); backdrop-filter: blur(20rpx); -webkit-backdrop-filter: blur(20rpx); box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.06); border-radius: 24rpx 24rpx 0 0; z-index: 100; }
+.action-right { display: flex; gap: var(--space-sm); margin-left: auto; }

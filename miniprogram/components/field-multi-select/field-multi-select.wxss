@@ -1,5 +1,7 @@
 .field-multi-select { margin-bottom: 0; }
-.options { display: flex; flex-wrap: wrap; gap: 20rpx; }
-.option { display: flex; align-items: center; padding: 24rpx 32rpx; border: 2rpx solid #e0e0e0; border-radius: 16rpx; font-size: 28rpx; color: #555; background: #fafafa; }
-.option.selected { border-color: #1a73e8; background: #e8f0fe; color: #1a73e8; font-weight: 600; }
-.checkmark { margin-left: 8rpx; font-size: 28rpx; font-weight: 700; }
+.multi-group { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+.multi-item { display: flex; align-items: center; gap: 12rpx; padding: 16rpx 22rpx; border: 1.5rpx solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg-card); transition: all 0.2s; }
+.multi-item.checked { border-color: var(--color-border-focus); background: var(--color-bg-hover); }
+.multi-item:active { transform: scale(0.97); }
+.multi-checkbox { flex-shrink: 0; }
+.multi-label { font-size: var(--font-size-sm); color: var(--color-text-primary); }

@@ -1,15 +1,12 @@
 <view class="field-template">
-  <view class="template-list">
-    <view wx:for="{{options}}" wx:key="value" class="template-card {{item.value === currentValue ? 'active' : ''}}"
-      bindtap="onSelect" data-value="{{item.value}}">
+  <radio-group class="template-group" bindchange="onChange">
+    <label wx:for="{{options}}" wx:key="value" class="template-item {{item.value === currentValue ? 'active' : ''}}">
+      <radio value="{{item.value}}" checked="{{item.value === currentValue}}" class="template-radio" />
       <image class="template-image" src="{{item.image || '/images/template-default.png'}}" mode="aspectFill" />
-      <view class="template-info">
+      <view class="template-content">
         <text class="template-title">{{item.label}}</text>
         <text wx:if="{{item.desc}}" class="template-desc">{{item.desc}}</text>
       </view>
-      <view class="check-circle {{item.value === currentValue ? 'checked' : ''}}">
-        <text wx:if="{{item.value === currentValue}}">✓</text>
-      </view>
-    </view>
-  </view>
+    </label>
+  </radio-group>
 </view>
