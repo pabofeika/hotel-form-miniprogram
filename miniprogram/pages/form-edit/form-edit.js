@@ -128,7 +128,8 @@ Page({
     });
 
     const changedField = this.findFieldDef(field_key);
-    if (changedField && (changedField.field_type === 'select' || changedField.field_type === 'multi_select')) {
+    // 只有 select(单选) 才重新计算条件联动；multi_select 不联动，避免重绘
+    if (changedField && changedField.field_type === 'select') {
       this.renderCurrentFields();
     }
   },

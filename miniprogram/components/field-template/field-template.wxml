@@ -1,0 +1,19 @@
+<view class="field-template">
+  <view class="field-label">
+    <text wx:if="{{required}}" class="required">*</text>
+    <text>{{label}}</text>
+  </view>
+  <view class="template-list">
+    <view wx:for="{{options}}" wx:key="value" class="template-card {{value === selectedValue ? 'active' : ''}}"
+      bindtap="onSelect" data-value="{{item.value}}">
+      <image class="template-image" src="{{item.image || '/images/template-default.png'}}" mode="aspectFill" />
+      <view class="template-info">
+        <text class="template-title">{{item.label}}</text>
+        <text wx:if="{{item.desc}}" class="template-desc">{{item.desc}}</text>
+      </view>
+      <view class="check-circle {{value === selectedValue ? 'checked' : ''}}">
+        <text wx:if="{{value === selectedValue}}">✓</text>
+      </view>
+    </view>
+  </view>
+</view>

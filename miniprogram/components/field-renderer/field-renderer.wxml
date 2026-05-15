@@ -24,6 +24,12 @@
       bind:change="onChange" />
   </view>
 
+  <view wx:elif="{{field.field_type === 'select' && field.field_key === 'homepage_template'}}" class="field-type">
+    <field-template label="{{field.label}}" required="{{field.is_required}}"
+      options="{{parsedOptions}}" value="{{value}}"
+      bind:change="onChange" />
+  </view>
+
   <view wx:elif="{{field.field_type === 'select'}}" class="field-type">
     <field-select label="{{field.label}}" required="{{field.is_required}}"
       placeholder="{{field.placeholder || '请选择'}}" options="{{parsedOptions}}"
