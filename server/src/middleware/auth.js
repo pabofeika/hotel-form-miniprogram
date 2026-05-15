@@ -43,4 +43,26 @@ function adminAuthMiddleware(req, res, next) {
   }
 }
 
-module.exports = { authMiddleware, adminAuthMiddleware };
+/**
+ * 可选认证中间件
+ * 有 token 则正常解析，无 token 时使用默认用户（开发/离线模式）
+ */
+function optionalAuth(req, res, next) {
+  const header = req.headers.authorization;
+  if (!header || !header.startsWith('Bearer ')) {
+    req.user = { id: 1, openid: 'anonymous' };
+    return next();
+  }
+
+  const token = header.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, config.jwt.secret);
+    req.user = decoded;
+  } catch (err) {
+    logger.warn('Optional auth: token invalid, using default user');
+    req.user = { id: 1, openid: 'anonymous' };
+  }
+  next();
+}
+
+module.exports = { authMiddleware, adminAuthMiddleware, optionalAuth };

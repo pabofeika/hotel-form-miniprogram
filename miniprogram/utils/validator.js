@@ -48,6 +48,15 @@ function validateForm(formValues, fields, skipConditionCheck = false) {
 
     // 类型特定验证
     if (value !== undefined && value !== null && value !== '') {
+      // 邮箱类型自动校验格式
+      if (field.field_type === 'email') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          errors.push({ field: field.field_key, label: field.label, message: `请输入正确的邮箱格式` });
+          continue;
+        }
+      }
+
       let validationObj = null;
       if (typeof field.validation === 'string') {
         try { validationObj = JSON.parse(field.validation); } catch (e) { validationObj = null; }

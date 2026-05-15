@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const recordController = require('../controllers/recordController');
-const { authMiddleware } = require('../middleware/auth');
+const { optionalAuth } = require('../middleware/auth');
 
-router.use(authMiddleware);
+// 可选认证：有 token 就用，没有就使用默认用户
+router.use(optionalAuth);
 
 // POST /api/v1/records - 创建/提交记录
 router.post('/', recordController.createOrSubmit);

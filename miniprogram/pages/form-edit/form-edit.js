@@ -224,11 +224,12 @@ Page({
       return;
     }
 
-    // Clear draft and navigate to preview
+    // Clear draft and navigate to preview（通过 globalData 传值，避免 URL 超长截断）
     cache.clearDraft(this.data.formId);
+    getApp().globalData.previewFormValues = this.data.formValues;
 
     wx.navigateTo({
-      url: `/pages/form-preview/form-preview?formId=${this.data.formId}&formValues=${encodeURIComponent(JSON.stringify(this.data.formValues))}`,
+      url: `/pages/form-preview/form-preview?formId=${this.data.formId}`,
     });
   },
 

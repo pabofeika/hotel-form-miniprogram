@@ -14,7 +14,8 @@ Page({
   onLoad(options) {
     console.log('[form-preview] onLoad');
     const formId = parseInt(options.formId);
-    const formValues = JSON.parse(decodeURIComponent(options.formValues));
+    // 从 globalData 读取填写的值（避免 URL 传参截断）
+    const formValues = getApp().globalData.previewFormValues || {};
 
     this.setData({ formId, formValues });
     this.loadFormDetail();
