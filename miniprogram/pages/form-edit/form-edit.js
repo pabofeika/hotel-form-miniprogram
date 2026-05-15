@@ -24,18 +24,20 @@ Page({
 
     this.setData({ formId });
 
-    // 自动登录
-    this.ensureLogin().then(() => {
-      this.loadFormTemplate(formId, resume);
-    });
+    // 登录模块已注释（小程序无需登录）
+    // this.ensureLogin().then(() => {
+    //   this.loadFormTemplate(formId, resume);
+    // });
+    this.loadFormTemplate(formId, resume);
   },
 
-  async ensureLogin() {
-    const app = getApp();
-    if (!app.globalData.token) {
-      await app.login();
-    }
-  },
+  // ensureLogin() 已注释（小程序无需登录）
+  // async ensureLogin() {
+  //   const app = getApp();
+  //   if (!app.globalData.token) {
+  //     await app.login();
+  //   }
+  // },
 
   async loadFormTemplate(formId, resume) {
     try {
