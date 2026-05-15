@@ -1,9 +1,29 @@
 <view class="field-select">
   <view class="field-label"><text wx:if="{{required}}" class="required">*</text><text>{{label}}</text></view>
-  <picker bindchange="onPickerChange" value="{{selectedIndex}}" range="{{optionLabels}}" mode="selector">
-    <view class="picker {{value ? '' : 'placeholder'}}">
-      {{value ? selectedLabel : placeholder}}
-      <text class="arrow">▾</text>
+  <view class="picker {{value ? '' : 'placeholder'}}" bindtap="showOptions">
+    <text>{{selectedLabel || placeholder}}</text>
+    <text class="arrow">▾</text>
+  </view>
+
+  <!-- 自定义选项弹窗 -->
+  <view wx:if="{{showPopup}}" class="popup-overlay" catchtap="hideOptions">
+    <view class="popup-content" catchtap="noop">
+      <view class="popup-header">
+        <text class="popup-title">{{label}}</text>
+        <text class="popup-close" bindtap="hideOptions">✕</text>
+      </view>
+      <scroll-view class="popup-list" scroll-y>
+        <view wx:for="{{options}}" wx:key="value" class="popup-item {{value === currentValue ? 'active' : ''}}"
+          bindtap="selectOption" data-value="{{item.value}}">
+          <view class="popup-item-info">
+            <text class="popup-item-label">{{item.label}}</text>
+            <text wx:if="{{item.desc}}" class="popup-item-desc">{{item.desc}}</text>
+          </view>
+          <view class="popup-check {{item.value === currentValue ? 'checked' : ''}}">
+            <text wx:if="{{item.value === currentValue}}">✓</text>
+          </view>
+        </view>
+      </scroll-view>
     </view>
-  </picker>
+  </view>
 </view>
