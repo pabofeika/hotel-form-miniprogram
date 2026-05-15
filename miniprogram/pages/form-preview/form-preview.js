@@ -1,6 +1,7 @@
 const api = require('../../utils/api');
 const { evaluateConditions } = require('../../utils/condition-engine');
 const { formatFieldValue } = require('../../utils/util');
+const { safeBack, backWithGuard } = require('../../utils/navigate');
 
 Page({
   data: {
@@ -22,7 +23,6 @@ Page({
     try {
       const template = await api.get(`/forms/${this.data.formId}`);
 
-      // Build visible fields for each step
       const steps = template.steps.map(step => {
         const fields = (step.fields || []).map(f => {
           let conditionsObj = null;
@@ -49,10 +49,13 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack();
+    backWithGuard(this, 1);
   },
 
   async submitForm() {
+    if (this._submitting) return;
+    this._submitting = true;
+
     wx.showLoading({ title: '提交中...' });
     try {
       const record = await api.post('/records', {
@@ -61,7 +64,7 @@ Page({
         values: this.data.formValues,
       });
 
-      // Subscribe message
+      // Subscribe message (optional)
       try {
         const { requestSubscribe } = require('../../utils/notify');
         const result = await requestSubscribe(['your_template_id_here']);
@@ -69,20 +72,19 @@ Page({
           record_id: record.id,
           tmplIds: result,
         });
-      } catch (e) {
-        // Subscription is optional
-      }
+      } catch (e) { /* optional */ }
 
       wx.hideLoading();
       wx.showToast({ title: '提交成功', icon: 'success', duration: 2000 });
 
-      // Redirect to record detail
       setTimeout(() => {
         wx.redirectTo({ url: `/pages/record-detail/record-detail?id=${record.id}` });
       }, 2000);
     } catch (err) {
       wx.hideLoading();
       wx.showToast({ title: err.message || '提交失败', icon: 'none' });
+    } finally {
+      setTimeout(() => { this._submitting = false; }, 1000);
     }
   },
 });

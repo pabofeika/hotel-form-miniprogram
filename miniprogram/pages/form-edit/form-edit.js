@@ -2,6 +2,7 @@ const api = require('../../utils/api');
 const cache = require('../../utils/cache');
 const { evaluateConditions } = require('../../utils/condition-engine');
 const { validateForm } = require('../../utils/validator');
+const { preventDoubleTap } = require('../../utils/navigate');
 
 Page({
   data: {
@@ -147,6 +148,7 @@ Page({
   },
 
   prevStep() {
+    if (preventDoubleTap(this)) return;
     if (this.data.currentStep <= 1) return;
     const step = this.data.currentStep - 1;
     this.setData({ currentStep: step });
@@ -156,6 +158,7 @@ Page({
   },
 
   nextStep() {
+    if (preventDoubleTap(this)) return;
     const { visibleFields, formValues, currentStep, totalSteps } = this.data;
 
     console.log('=== 下一步 - 表单数据 ===', JSON.stringify(formValues));
