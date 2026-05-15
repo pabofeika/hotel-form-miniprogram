@@ -30,12 +30,23 @@ exports.createOrSubmit = async (req, res, next) => {
 
     // Save field values if provided
     if (values && Object.keys(values).length > 0) {
-      const valueEntries = Object.entries(values).map(([fieldId, value]) => ({
+      // Look up field IDs by field_key
+      const templateFields = await db('form_fields')
+        .join('form_steps', 'form_fields.step_id', 'form_steps.id')
+        .where('form_steps.template_id', form_template_id)
+        .select('form_fields.id', 'form_fields.field_key');
+      const keyToId = {};
+      templateFields.forEach(f => { keyToId[f.field_key] = f.id; });
+
+      const valueEntries = Object.entries(values).map(([key, value]) => ({
         record_id: recordId,
-        field_id: parseInt(fieldId),
+        field_id: keyToId[key] || parseInt(key), // support both field_key and field_id
         value: typeof value === 'object' ? JSON.stringify(value) : String(value || ''),
-      }));
-      await db('record_values').insert(valueEntries);
+      })).filter(v => v.field_id); // skip unknown fields
+
+      if (valueEntries.length > 0) {
+        await db('record_values').insert(valueEntries);
+      }
     }
 
     const record = await db('records').where({ id: recordId }).first();
@@ -78,11 +89,20 @@ exports.updateDraft = async (req, res, next) => {
     // Delete old values and re-insert
     if (values) {
       await db('record_values').where({ record_id: id }).delete();
-      const valueEntries = Object.entries(values).map(([fieldId, value]) => ({
+      // Look up field IDs by field_key
+      const templateFields = await db('form_fields')
+        .join('form_steps', 'form_fields.step_id', 'form_steps.id')
+        .where('form_steps.template_id', record.form_template_id)
+        .select('form_fields.id', 'form_fields.field_key');
+      const keyToId = {};
+      templateFields.forEach(f => { keyToId[f.field_key] = f.id; });
+
+      const valueEntries = Object.entries(values).map(([key, value]) => ({
         record_id: id,
-        field_id: parseInt(fieldId),
+        field_id: keyToId[key] || parseInt(key),
         value: typeof value === 'object' ? JSON.stringify(value) : String(value || ''),
-      }));
+      })).filter(v => v.field_id);
+
       if (valueEntries.length > 0) {
         await db('record_values').insert(valueEntries);
       }

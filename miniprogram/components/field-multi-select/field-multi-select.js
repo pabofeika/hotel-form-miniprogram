@@ -3,7 +3,7 @@ Component({
     label: { type: String, value: '' },
     required: { type: null, value: false },
     options: { type: Array, value: [] },
-    value: { type: Array, value: [] },
+    value: { type: null, value: [] },
   },
 
   methods: {

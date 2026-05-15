@@ -4,7 +4,7 @@ Component({
     required: { type: null, value: false },
     placeholder: { type: String, value: '请选择' },
     options: { type: Array, value: [] },
-    value: { type: String, value: '' },
+    value: { type: null, value: '' },
   },
 
   data: {
