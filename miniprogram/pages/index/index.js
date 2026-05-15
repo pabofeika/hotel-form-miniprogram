@@ -10,6 +10,7 @@ Page({
   },
 
   onLoad() {
+    console.log('[index] onLoad');
     this.loadForms();
     this.checkDraft();
   },

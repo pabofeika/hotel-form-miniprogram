@@ -20,6 +20,7 @@ Page({
   },
 
   onLoad(options) {
+    console.log('[form-edit] onLoad, formId:', options.formId);
     const formId = parseInt(options.formId);
     const resume = options.resume === 'true';
 
@@ -31,6 +32,10 @@ Page({
     // });
     this.loadFormTemplate(formId, resume);
   },
+
+  onShow() { console.log('[form-edit] onShow'); },
+
+  onUnload() { console.log('[form-edit] onUnload'); },
 
   // ensureLogin() 已注释（小程序无需登录）
   // async ensureLogin() {
@@ -161,7 +166,7 @@ Page({
     if (preventDoubleTap(this)) return;
     const { visibleFields, formValues, currentStep, totalSteps } = this.data;
 
-    console.log('=== 下一步 - 表单数据 ===', JSON.stringify(formValues));
+    console.log('[form-edit] 点击下一步 step=' + currentStep, '字段数=' + (visibleFields || []).length, '已填值keys:', Object.keys(formValues));
 
     const result = validateForm(formValues, visibleFields, false);
     if (!result.valid) {

@@ -12,12 +12,17 @@ Page({
   },
 
   onLoad(options) {
+    console.log('[form-preview] onLoad');
     const formId = parseInt(options.formId);
     const formValues = JSON.parse(decodeURIComponent(options.formValues));
 
     this.setData({ formId, formValues });
     this.loadFormDetail();
   },
+
+  onShow() { console.log('[form-preview] onShow'); },
+
+  onUnload() { console.log('[form-preview] onUnload'); },
 
   async loadFormDetail() {
     try {

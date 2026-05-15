@@ -15,6 +15,14 @@ App({
     // }
   },
 
+  onError(err) {
+    console.error('[App onError] 全局异常捕获:', err);
+  },
+
+  onUnhandledRejection(res) {
+    console.error('[App onUnhandledRejection] 未处理 Promise 异常:', res.reason || res);
+  },
+
   // login() 已注释，保留代码以便后续恢复
   // async login() {
   //   try {
