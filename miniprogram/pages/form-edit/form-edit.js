@@ -112,19 +112,21 @@ Page({
   },
 
   onFieldChange(e) {
-    const { field_key } = e.currentTarget.dataset;
+    // data-field-key → dataset.fieldKey（驼峰）
+    const field_key = e.currentTarget.dataset.fieldKey;
     const value = e.detail;
 
-    // 极轻量：只更新当前字段，不遍历、不复查
-    const newValues = {};
-    newValues[field_key] = value;
+    if (!field_key) {
+      console.warn('onFieldChange: field_key is missing');
+      return;
+    }
+
     this.setData({
       ['formValues.' + field_key]: value,
       ['fieldErrors.' + field_key]: '',
       hasUnsavedChanges: true,
     });
 
-    // 只有 select/multi_select 变更才重新计算条件联动
     const changedField = this.findFieldDef(field_key);
     if (changedField && (changedField.field_type === 'select' || changedField.field_type === 'multi_select')) {
       this.renderCurrentFields();
@@ -153,7 +155,8 @@ Page({
   nextStep() {
     const { visibleFields, formValues, currentStep, totalSteps } = this.data;
 
-    // Validate current step
+    console.log('=== 下一步 - 表单数据 ===', JSON.stringify(formValues));
+
     const result = validateForm(formValues, visibleFields, false);
     if (!result.valid) {
       const errors = {};
