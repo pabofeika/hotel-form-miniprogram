@@ -1,4 +1,4 @@
 .field-select { margin-bottom: 0; }
-.picker { display: flex; align-items: center; justify-content: space-between; padding: 32rpx 36rpx; border: 2rpx solid #e0e0e0; border-radius: 18rpx; font-size: 32rpx; background: #fafafa; min-height: 96rpx; box-sizing: border-box; }
+.picker { display: flex; align-items: center; justify-content: space-between; padding: 32rpx 36rpx; border: 2rpx solid #e0e0e0; border-radius: 18rpx; font-size: 32rpx; background: #fafafa; min-height: 96rpx; box-sizing: border-box; color: #1a1a2e; }
 .picker.placeholder { color: #c0c0c0; }
 .arrow { font-size: 28rpx; color: #999; }
