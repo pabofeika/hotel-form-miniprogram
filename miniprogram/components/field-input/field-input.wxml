@@ -3,5 +3,5 @@
     <text wx:if="{{required}}" class="required">*</text>
     <text>{{label}}</text>
   </view>
-  <input class="input" type="text" placeholder="{{placeholder}}" bindblur="onBlur" />
+  <input class="input" type="text" placeholder="{{placeholder}}" bindinput="onInput" />
 </view>

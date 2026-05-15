@@ -5,7 +5,8 @@ Component({
     placeholder: { type: String, value: '请输入' },
   },
   methods: {
-    onBlur(e) {
+    onInput(e) {
+      // 极轻量：无 setData、无计算，只通知父组件
       this.triggerEvent('change', e.detail.value);
     },
   },

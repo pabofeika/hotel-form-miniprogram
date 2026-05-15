@@ -115,15 +115,16 @@ Page({
     const { field_key } = e.currentTarget.dataset;
     const value = e.detail;
 
-    const formValues = { ...this.data.formValues, [field_key]: value };
+    // 极轻量：只更新当前字段，不遍历、不复查
+    const newValues = {};
+    newValues[field_key] = value;
     this.setData({
-      formValues,
+      ['formValues.' + field_key]: value,
+      ['fieldErrors.' + field_key]: '',
       hasUnsavedChanges: true,
-      // Clear field error
-      fieldErrors: { ...this.data.fieldErrors, [field_key]: '' },
     });
 
-    // Only re-render fields when select/multi_select changes (may affect conditions)
+    // 只有 select/multi_select 变更才重新计算条件联动
     const changedField = this.findFieldDef(field_key);
     if (changedField && (changedField.field_type === 'select' || changedField.field_type === 'multi_select')) {
       this.renderCurrentFields();
