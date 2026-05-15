@@ -1,14 +1,26 @@
-/** 步骤进度条 - 渐变圆点流线型 */
+/** 步骤进度条 - 圆点与文字固定配对 */
 .step-progress { padding: var(--space-xl) var(--space-lg) var(--space-md); background: var(--color-bg-card); border-bottom: 1rpx solid var(--color-border); }
-.step-dots { display: flex; justify-content: space-between; align-items: center; padding: 0 20rpx; position: relative; margin-bottom: 16rpx; }
-.step-dots::before { content: ''; position: absolute; top: 18rpx; left: 60rpx; right: 60rpx; height: 4rpx; background: var(--color-border); z-index: 0; border-radius: 2rpx; }
 
-.step-dot { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-.dot { width: 40rpx; height: 40rpx; border-radius: var(--radius-full); background: var(--color-border); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-.step-dot.active .dot { background: var(--color-primary-gradient); box-shadow: 0 0 0 6rpx rgba(37,99,235,0.15); }
-.step-dot.completed .dot { background: var(--color-primary); }
-.step-num { position: absolute; top: 8rpx; font-size: 18rpx; color: #fff; font-weight: 800; }
+.step-list { display: flex; justify-content: space-between; align-items: flex-start; position: relative; }
 
-.step-names { display: flex; justify-content: space-between; padding: 0 6rpx; }
-.step-name { font-size: 18rpx; color: var(--color-text-tertiary); text-align: center; width: 20%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.step-name.active { color: var(--color-primary); font-weight: 700; }
+.step-item { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
+
+/* 连接线 */
+.step-line { position: absolute; top: 18rpx; left: 50%; right: -50%; height: 4rpx; background: var(--color-border); z-index: 0; border-radius: 2rpx; }
+.step-item.completed .step-line,
+.step-item.completed ~ .step-item .step-line { background: var(--color-primary); }
+
+/* 圆点容器 */
+.step-dot-wrap { width: 40rpx; height: 40rpx; position: relative; z-index: 1; margin-bottom: 8rpx; }
+
+/* 圆点 */
+.step-dot { width: 40rpx; height: 40rpx; border-radius: var(--radius-full); background: var(--color-border); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+.step-item.active .step-dot { background: var(--color-primary-gradient); box-shadow: 0 0 0 6rpx rgba(37,99,235,0.15); }
+.step-item.completed .step-dot { background: var(--color-primary); }
+
+/* 序号数字 */
+.step-num { font-size: 18rpx; color: #fff; font-weight: 800; }
+
+/* 名称 - 强制居中 */
+.step-name { font-size: 18rpx; color: var(--color-text-tertiary); text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.step-item.active .step-name { color: var(--color-primary); font-weight: 700; }

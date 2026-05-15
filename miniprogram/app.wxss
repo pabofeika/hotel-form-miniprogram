@@ -91,10 +91,12 @@ page {
   align-items: center;
   justify-content: center;
   padding: 16rpx 28rpx;
+  margin: 0;
   border: none;
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
   font-weight: 600;
+  line-height: 1.4;
   text-align: center;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;

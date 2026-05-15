@@ -8,6 +8,8 @@
 .field-error { margin: -8rpx var(--space-lg) var(--space-md); padding: var(--space-xs) var(--space-md); background: var(--color-error-bg); border-radius: var(--radius-sm); border-left: 4rpx solid var(--color-error); }
 .field-error text { font-size: var(--font-size-xs); color: var(--color-error); font-weight: 500; }
 
-/* 底部悬浮操作栏 - 毛玻璃效果 */
-.action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: var(--space-md) var(--space-lg) 48rpx; background: rgba(255,255,255,0.92); backdrop-filter: blur(20rpx); -webkit-backdrop-filter: blur(20rpx); box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.06); border-radius: 24rpx 24rpx 0 0; z-index: 100; }
-.action-right { display: flex; gap: var(--space-sm); margin-left: auto; }
+/* 底部悬浮操作栏 */
+.action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); padding: var(--space-md) var(--space-lg) 48rpx; background: rgba(255,255,255,0.92); backdrop-filter: blur(20rpx); -webkit-backdrop-filter: blur(20rpx); box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.06); border-radius: 24rpx 24rpx 0 0; z-index: 100; }
+
+/* 右侧按钮组 */
+.action-right { display: flex; gap: var(--space-sm); flex-shrink: 0; }

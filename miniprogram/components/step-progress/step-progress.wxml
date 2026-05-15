@@ -1,20 +1,23 @@
-<!-- 步骤进度条组件 -->
+<!-- 步骤进度条组件 - 圆点与文字一一对应 -->
 <view class="step-progress">
-  <view class="step-dots">
+  <view class="step-list">
     <view
       wx:for="{{steps}}"
       wx:key="id"
-      class="step-dot {{item.step_number < currentStep ? 'completed' : item.step_number === currentStep ? 'active' : ''}}"
+      class="step-item {{item.step_number < currentStep ? 'completed' : item.step_number === currentStep ? 'active' : ''}}"
     >
-      <view class="dot"></view>
-      <text class="step-num">{{item.step_number}}</text>
+      <!-- 步骤连线（隐藏最后一个） -->
+      <view wx:if="{{index < steps.length - 1}}" class="step-line"></view>
+
+      <!-- 圆点 + 序号 -->
+      <view class="step-dot-wrap">
+        <view class="step-dot">
+          <text class="step-num">{{item.step_number}}</text>
+        </view>
+      </view>
+
+      <!-- 名称 -->
+      <text class="step-name">{{item.title}}</text>
     </view>
-  </view>
-  <view class="step-names">
-    <view
-      wx:for="{{steps}}"
-      wx:key="id"
-      class="step-name {{item.step_number === currentStep ? 'active' : ''}}"
-    >{{item.title}}</view>
   </view>
 </view>
