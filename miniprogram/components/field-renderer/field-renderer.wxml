@@ -1,64 +1,54 @@
-<!-- 万能字段渲染器 -->
+<!-- 万能字段渲染器 - text类型不再传value（改为bindblur失焦同步） -->
 <view class="field-wrapper">
   <view wx:if="{{field.field_type === 'text'}}" class="field-type">
     <field-input label="{{field.label}}" required="{{field.is_required}}"
-      placeholder="{{field.placeholder || '请输入'}}" value="{{value}}"
-      bind:change="onChange"
-    />
+      placeholder="{{field.placeholder || '请输入'}}"
+      bind:change="onChange" />
   </view>
 
   <view wx:elif="{{field.field_type === 'textarea'}}" class="field-type">
     <field-textarea label="{{field.label}}" required="{{field.is_required}}"
-      placeholder="{{field.placeholder || '请输入'}}" value="{{value}}"
-      bind:change="onChange"
-    />
+      placeholder="{{field.placeholder || '请输入'}}"
+      bind:change="onChange" />
   </view>
 
   <view wx:elif="{{field.field_type === 'number'}}" class="field-type">
     <field-number label="{{field.label}}" required="{{field.is_required}}"
-      placeholder="{{field.placeholder || '请输入数字'}}" value="{{value}}"
-      bind:change="onChange"
-    />
+      placeholder="{{field.placeholder || '请输入数字'}}"
+      bind:change="onChange" />
   </view>
 
   <view wx:elif="{{field.field_type === 'email'}}" class="field-type">
     <field-email label="{{field.label}}" required="{{field.is_required}}"
-      placeholder="{{field.placeholder || '请输入邮箱'}}" value="{{value}}"
-      bind:change="onChange"
-    />
+      placeholder="{{field.placeholder || '请输入邮箱'}}"
+      bind:change="onChange" />
   </view>
 
   <view wx:elif="{{field.field_type === 'select'}}" class="field-type">
     <field-select label="{{field.label}}" required="{{field.is_required}}"
       placeholder="{{field.placeholder || '请选择'}}" options="{{parsedOptions}}"
-      value="{{value}}" helpText="{{field.help_text}}"
-      bind:change="onChange"
-    />
+      value="{{value}}"
+      bind:change="onChange" />
   </view>
 
   <view wx:elif="{{field.field_type === 'multi_select'}}" class="field-type">
     <field-multi-select label="{{field.label}}" required="{{field.is_required}}"
-      placeholder="{{field.placeholder || '请选择'}}" options="{{parsedOptions}}"
-      value="{{value}}" helpText="{{field.help_text}}"
-      bind:change="onChange"
-    />
+      options="{{parsedOptions}}" value="{{value}}"
+      bind:change="onChange" />
   </view>
 
   <view wx:elif="{{field.field_type === 'file'}}" class="field-type">
     <field-file label="{{field.label}}" required="{{field.is_required}}"
       placeholder="{{field.placeholder || '请上传文件'}}" value="{{value}}"
       helpText="{{field.help_text}}"
-      bind:change="onChange"
-    />
+      bind:change="onChange" />
   </view>
 
   <view wx:else class="field-type">
     <field-input label="{{field.label}}" required="{{field.is_required}}"
-      placeholder="{{field.placeholder || '请输入'}}" value="{{value}}"
-      bind:change="onChange"
-    />
+      placeholder="{{field.placeholder || '请输入'}}"
+      bind:change="onChange" />
   </view>
 
-  <!-- Help text -->
   <text wx:if="{{field.help_text}}" class="help-text">{{field.help_text}}</text>
 </view>
