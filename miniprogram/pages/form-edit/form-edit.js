@@ -123,8 +123,21 @@ Page({
       fieldErrors: { ...this.data.fieldErrors, [field_key]: '' },
     });
 
-    // Re-render fields (conditions may change)
-    this.renderCurrentFields();
+    // Only re-render fields when select/multi_select changes (may affect conditions)
+    const changedField = this.findFieldDef(field_key);
+    if (changedField && (changedField.field_type === 'select' || changedField.field_type === 'multi_select')) {
+      this.renderCurrentFields();
+    }
+  },
+
+  findFieldDef(fieldKey) {
+    for (const step of this.data.steps) {
+      if (step.fields) {
+        const f = step.fields.find(f => f.field_key === fieldKey);
+        if (f) return f;
+      }
+    }
+    return null;
   },
 
   prevStep() {

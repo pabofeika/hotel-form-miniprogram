@@ -1,7 +1,7 @@
 Component({
   properties: {
     label: { type: String, value: '' },
-    required: { type: [Boolean, Number], value: false },
+    required: { type: null, value: false },
     placeholder: { type: String, value: '请上传文件' },
     value: { type: String, value: '' },
   },

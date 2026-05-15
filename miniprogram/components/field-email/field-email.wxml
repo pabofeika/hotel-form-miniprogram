@@ -1,4 +1,4 @@
 <view class="field-email">
   <view class="field-label"><text wx:if="{{required}}" class="required">*</text><text>{{label}}</text></view>
-  <input class="input" type="text" value="{{value}}" placeholder="{{placeholder}}" bindinput="onInput" />
+  <input class="input" type="text" value="{{inputValue}}" placeholder="{{placeholder}}" bindinput="onInput" />
 </view>

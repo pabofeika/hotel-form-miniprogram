@@ -1,75 +1,133 @@
-/** Global Styles **/
+/** 全局样式 - 全面UI升级 */
 page {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
   font-size: 28rpx;
-  color: #333;
-  background-color: #f5f5f5;
+  color: #1a1a2e;
+  background-color: #f0f2f5;
   box-sizing: border-box;
 }
 
-/* Common button styles */
+/* ===== 按钮系统 ===== */
 .btn-primary {
-  background: linear-gradient(135deg, #1a73e8, #1557b0);
+  background: linear-gradient(135deg, #1a73e8, #0d47a1);
   color: #fff;
   border: none;
-  border-radius: 12rpx;
-  padding: 24rpx 48rpx;
-  font-size: 32rpx;
+  border-radius: 16rpx;
+  padding: 28rpx 56rpx;
+  font-size: 30rpx;
+  font-weight: 600;
   text-align: center;
-  transition: opacity 0.2s;
+  box-shadow: 0 4rpx 16rpx rgba(26,115,232,0.3);
 }
 
 .btn-primary:active {
-  opacity: 0.8;
+  opacity: 0.85;
+  transform: scale(0.97);
 }
 
 .btn-secondary {
   background: #fff;
   color: #1a73e8;
   border: 2rpx solid #1a73e8;
-  border-radius: 12rpx;
-  padding: 24rpx 48rpx;
-  font-size: 32rpx;
+  border-radius: 16rpx;
+  padding: 28rpx 48rpx;
+  font-size: 30rpx;
+  font-weight: 500;
   text-align: center;
 }
 
-/* Card container */
+/* ===== 卡片容器 ===== */
 .card {
   background: #fff;
-  border-radius: 16rpx;
-  padding: 32rpx;
-  margin: 20rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+  border-radius: 20rpx;
+  padding: 36rpx 32rpx;
+  margin: 20rpx 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
 }
 
-/* Step section */
-.step-section {
-  margin: 20rpx;
-}
-
-.step-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #222;
-  margin-bottom: 8rpx;
-}
-
-.step-desc {
-  font-size: 26rpx;
-  color: #888;
-  margin-bottom: 32rpx;
-}
-
-/* Status badges */
+/* ===== 状态标签 ===== */
 .badge {
   display: inline-block;
-  padding: 4rpx 16rpx;
-  border-radius: 8rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 10rpx;
   font-size: 22rpx;
+  font-weight: 500;
+}
+.badge-draft { background: #fff7e6; color: #d48806; }
+.badge-submitted { background: #e6f7ff; color: #1890ff; }
+.badge-reviewing { background: #f9f0ff; color: #722ed1; }
+.badge-approved { background: #f6ffed; color: #389e0d; }
+.badge-rejected { background: #fff1f0; color: #cf1322; }
+
+/* ===== 字段通用样式 ===== */
+.field-wrapper {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 32rpx 32rpx 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+  border: 2rpx solid #f0f0f0;
 }
 
-.badge-draft { background: #fff3e0; color: #e65100; }
-.badge-submitted { background: #e3f2fd; color: #1565c0; }
-.badge-reviewing { background: #f3e5f5; color: #7b1fa2; }
-.badge-approved { background: #e8f5e9; color: #2e7d32; }
-.badge-rejected { background: #fbe9e7; color: #c62828; }
+.field-label {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 20rpx;
+}
+
+.required-star {
+  color: #ff4d4f;
+  margin-right: 6rpx;
+  font-size: 30rpx;
+}
+
+/* 输入框 - 大号+圆润 */
+.input-field {
+  width: 100%;
+  padding: 28rpx 32rpx;
+  border: 2rpx solid #e8e8e8;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  color: #333;
+  background: #fafafa;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-field:focus {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 4rpx rgba(26,115,232,0.1);
+  background: #fff;
+}
+
+/* 帮助文本 */
+.help-text {
+  display: block;
+  font-size: 22rpx;
+  color: #888;
+  margin-top: 16rpx;
+  line-height: 1.5;
+  padding: 16rpx 20rpx;
+  background: #fafafa;
+  border-radius: 10rpx;
+  border-left: 6rpx solid #1a73e8;
+}
+
+/* 步骤标题 */
+.step-section {
+  margin: 24rpx 24rpx 16rpx;
+}
+.step-section .step-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 8rpx;
+}
+.step-section .step-desc {
+  font-size: 26rpx;
+  color: #888;
+  margin-bottom: 24rpx;
+}

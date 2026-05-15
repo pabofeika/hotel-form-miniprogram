@@ -1,106 +1,29 @@
-/** 首页样式 */
-.page {
-  min-height: 100vh;
-  padding-bottom: 40rpx;
-}
+/** 首页 - 全面UI升级 */
+.page { min-height: 100vh; padding-bottom: 40rpx; }
+.loading { display: flex; justify-content: center; align-items: center; height: 500rpx; font-size: 28rpx; color: #999; }
 
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400rpx;
-  font-size: 28rpx;
-  color: #999;
-}
+/* 顶栏 */
+.page-header { padding: 80rpx 32rpx 50rpx; background: linear-gradient(135deg, #1a73e8, #0d47a1); color: #fff; border-radius: 0 0 40rpx 40rpx; }
+.page-title { display: block; font-size: 48rpx; font-weight: 700; margin-bottom: 12rpx; }
+.page-subtitle { display: block; font-size: 26rpx; opacity: 0.85; }
 
-.page-header {
-  padding: 60rpx 32rpx 40rpx;
-  background: linear-gradient(135deg, #1a73e8, #0d47a1);
-  color: #fff;
-}
-
-.page-title {
-  display: block;
-  font-size: 48rpx;
-  font-weight: 700;
-  margin-bottom: 12rpx;
-}
-
-.page-subtitle {
-  display: block;
-  font-size: 26rpx;
-  opacity: 0.8;
-}
-
-.draft-banner {
-  display: flex;
-  align-items: center;
-  background: #fff8e1;
-  margin: 20rpx;
-  padding: 24rpx 32rpx;
-  border-radius: 16rpx;
-  border-left: 8rpx solid #ffa000;
-}
-
+/* 草稿恢复条 */
+.draft-banner { display: flex; align-items: center; background: #fff8e1; margin: 24rpx 24rpx 0; padding: 24rpx 28rpx; border-radius: 16rpx; border-left: 8rpx solid #ffa000; }
 .draft-icon { font-size: 36rpx; margin-right: 16rpx; }
-.draft-text { flex: 1; font-size: 28rpx; color: #e65100; }
+.draft-text { flex: 1; font-size: 26rpx; color: #e65100; }
 .draft-arrow { font-size: 36rpx; color: #ffa000; }
 
-.form-card {
-  background: #fff;
-  margin: 20rpx;
-  padding: 32rpx;
-  border-radius: 16rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16rpx;
-}
-
-.card-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  flex: 1;
-}
-
-.card-version {
-  font-size: 22rpx;
-  color: #1a73e8;
-  background: #e3f2fd;
-  padding: 4rpx 12rpx;
-  border-radius: 8rpx;
-}
-
-.card-desc {
-  font-size: 26rpx;
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 20rpx;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+/* 表单卡片 - 加大+层次感 */
+.form-card { background: #fff; margin: 24rpx 24rpx 0; padding: 36rpx 32rpx; border-radius: 20rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06); }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16rpx; }
+.card-title { font-size: 32rpx; font-weight: 600; flex: 1; color: #1a1a2e; }
+.card-version { font-size: 22rpx; color: #1a73e8; background: #e8f0fe; padding: 6rpx 16rpx; border-radius: 10rpx; font-weight: 500; }
+.card-desc { font-size: 26rpx; color: #666; line-height: 1.6; margin-bottom: 20rpx; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; }
 .card-date { font-size: 22rpx; color: #bbb; }
-.card-action { font-size: 28rpx; color: #1a73e8; font-weight: 500; }
+.card-action { font-size: 28rpx; color: #1a73e8; font-weight: 600; }
 
-.empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 120rpx 0;
-}
-
-.empty-icon { font-size: 80rpx; margin-bottom: 20rpx; }
-.empty-text { font-size: 28rpx; color: #999; }
+/* 空状态 */
+.empty { display: flex; flex-direction: column; align-items: center; padding: 160rpx 0; }
+.empty-icon { font-size: 100rpx; margin-bottom: 24rpx; }
+.empty-text { font-size: 28rpx; color: #bbb; }

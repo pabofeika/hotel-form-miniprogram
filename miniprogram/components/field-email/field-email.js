@@ -1,11 +1,13 @@
 Component({
   properties: {
     label: { type: String, value: '' },
-    required: { type: [Boolean, Number], value: false },
+    required: { type: null, value: false },
     placeholder: { type: String, value: '请输入邮箱' },
     value: { type: String, value: '' },
   },
+  data: { inputValue: '' },
+  observers: { value(v) { this.setData({ inputValue: v || '' }); } },
   methods: {
-    onInput(e) { this.triggerEvent('change', e.detail.value); },
+    onInput(e) { const val = e.detail.value; this.setData({ inputValue: val }); this.triggerEvent('change', val); },
   },
 });

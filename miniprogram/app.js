@@ -4,7 +4,7 @@ App({
   globalData: {
     userInfo: null,
     token: '',
-    apiBaseUrl: 'http://localhost:3000/api/v1',
+    apiBaseUrl: 'http://127.0.0.1:3000/api/v1',
   },
 
   onLaunch() {

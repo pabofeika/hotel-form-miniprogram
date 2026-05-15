@@ -1,7 +1,7 @@
 Component({
   properties: {
     label: { type: String, value: '' },
-    required: { type: [Boolean, Number], value: false },
+    required: { type: null, value: false },
     options: { type: Array, value: [] },
     value: { type: Array, value: [] },
   },
