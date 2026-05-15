@@ -323,7 +323,7 @@ exports.seed = async function (knex) {
       sort_order: 7,
     },
     {
-      step_index: 3, field_key: 'online_mall', label: '线上商城', field_type: 'multi_select',
+      step_index: 3, field_key: 'online_mall', label: '线上商城', field_type: 'select',
       is_required: false, placeholder: '智慧主页含商城功能', help_text: '电视下单需要同步采购打印机',
       options: JSON.stringify([
         { label: '智慧主页-商城（需要配合硬件打印机）', value: 'smart_mall' },
