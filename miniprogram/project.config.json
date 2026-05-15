@@ -7,7 +7,7 @@
   "setting": {
     "bundle": false,
     "userConfirmedBundleSwitch": false,
-    "urlCheck": true,
+    "urlCheck": false,
     "scopeDataCheck": false,
     "coverView": true,
     "es6": true,
@@ -41,7 +41,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.3.0",
-  "appid": "your_appid_here",
+  "appid": "wx98e8bf356d696c46",
   "projectname": "hotel-form-miniprogram",
   "condition": {},
   "editorSetting": {
