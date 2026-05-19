@@ -7,7 +7,6 @@ Page({
       { label: '全部', value: '' },
       { label: '草稿', value: 'draft' },
       { label: '已提交', value: 'submitted' },
-      { label: '审核中', value: 'reviewing' },
       { label: '已完成', value: 'approved' },
     ],
     currentStatus: '',
