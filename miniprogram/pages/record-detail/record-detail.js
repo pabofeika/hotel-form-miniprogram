@@ -20,30 +20,19 @@ Page({
       const data = await api.get(`/records/${id}`);
       const record = data.record;
 
-      // Build form steps with values
-      const template = await api.get(`/forms/${record.form_template_id}`);
-      const formValues = {};
-      data.values.forEach(v => {
-        try {
-          formValues[v.field_id] = JSON.parse(v.value);
-        } catch (e) {
-          formValues[v.field_id] = v.value;
-        }
-      });
-
-      // Map field_id to field_key
-      const allFields = [];
-      template.steps.forEach(s => {
-        (s.fields || []).forEach(f => allFields.push(f));
-      });
-
+      // 直接用 field_key 映射，避免前后端 field_id 不一致
       const mappedValues = {};
-      data.values.forEach(v => {
-        const field = allFields.find(f => f.id === v.field_id);
-        if (field) {
-          mappedValues[field.field_key] = formValues[v.field_id];
+      (data.values || []).forEach(v => {
+        const key = v.field ? v.field.field_key : v.field_key;
+        if (key) {
+          let val = v.value;
+          try { val = JSON.parse(val); } catch (e) { /* string */ }
+          mappedValues[key] = val;
         }
       });
+
+      // 获取模板结构
+      const template = await api.get(`/forms/${record.form_template_id}`);
 
       const formSteps = template.steps.map(step => {
         const fields = (step.fields || []).map(f => {
