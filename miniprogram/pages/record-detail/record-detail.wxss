@@ -1,27 +1,22 @@
-/** 记录详情 - 信息层级分明 */
+/** 订单详情 - 直接展示预览条目 */
 .page { padding: var(--space-xl); background: var(--color-bg); min-height: 100vh; }
 .loading { text-align: center; padding: 300rpx 0; font-size: var(--font-size-base); color: var(--color-text-tertiary); }
 
 /* 顶部状态头 */
-.record-header { background: var(--color-primary-gradient); color: #fff; border-radius: var(--radius-xl); padding: var(--space-xl); margin-bottom: var(--space-lg); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
-.record-header::after { content: ''; position: absolute; top: -80rpx; right: -40rpx; width: 200rpx; height: 200rpx; background: rgba(255,255,255,0.06); border-radius: 50%; }
-.record-sn { font-size: var(--font-size-lg); font-weight: 700; position: relative; z-index: 1; }
+.order-header { background: var(--color-primary-gradient); color: #fff; border-radius: var(--radius-xl); padding: var(--space-xl); margin-bottom: var(--space-lg); position: relative; overflow: hidden; }
+.order-header::after { content: ''; position: absolute; top: -80rpx; right: -40rpx; width: 200rpx; height: 200rpx; background: rgba(255,255,255,0.06); border-radius: 50%; }
+.order-sn { font-size: var(--font-size-lg); font-weight: 700; position: relative; z-index: 1; }
 
 /* 区域卡片 */
 .section { background: var(--color-bg-card); border-radius: var(--radius-xl); padding: var(--space-xl); margin-bottom: var(--space-lg); box-shadow: var(--shadow-sm); border: 1rpx solid rgba(0,0,0,0.03); }
 .section-title { font-size: var(--font-size-lg); font-weight: 700; display: block; margin-bottom: var(--space-lg); color: var(--color-text-primary); }
 
-.step-values { margin-bottom: var(--space-lg); }
-.step-label { font-size: var(--font-size-sm); color: var(--color-primary); font-weight: 700; display: block; margin-bottom: var(--space-sm); padding: 6rpx 0; border-bottom: 2rpx solid var(--color-primary-light); }
-.value-row { display: flex; padding: var(--space-sm) 0; }
-.value-label { width: 180rpx; font-size: var(--font-size-xs); color: var(--color-text-tertiary); flex-shrink: 0; }
-.value-text { flex: 1; font-size: var(--font-size-base); color: var(--color-text-primary); font-weight: 500; }
+/* 预览条目列表 */
+.detail-list { }
+.detail-item { display: flex; flex-direction: column; padding: var(--space-sm) 0; border-bottom: 1rpx solid var(--color-border); }
+.detail-item:last-child { border-bottom: none; }
+.detail-label { font-size: var(--font-size-xs); color: var(--color-text-tertiary); display: block; margin-bottom: 4rpx; }
+.detail-value { font-size: var(--font-size-base); color: var(--color-text-primary); font-weight: 500; display: block; line-height: 1.6; }
 
-/* 反馈时间线 */
-.feedback-item { padding: var(--space-lg) 0; border-bottom: 1rpx solid var(--color-border); }
-.feedback-item:last-child { border-bottom: none; }
-.feedback-header { display: flex; justify-content: space-between; margin-bottom: var(--space-xs); }
-.feedback-admin { font-weight: 700; color: var(--color-text-primary); font-size: var(--font-size-sm); }
-.feedback-date { font-size: 20rpx; color: var(--color-text-tertiary); }
-.feedback-content { font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: 1.7; }
-.no-feedback { text-align: center; color: var(--color-text-tertiary); padding: 60rpx 0; font-size: var(--font-size-sm); }
+/* 空状态 */
+.empty { text-align: center; padding: 200rpx 0; font-size: var(--font-size-base); color: var(--color-text-tertiary); }

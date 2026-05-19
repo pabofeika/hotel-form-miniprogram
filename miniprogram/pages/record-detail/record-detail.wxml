@@ -1,41 +1,27 @@
-<!-- 提交记录详情 + 查看反馈 -->
+<!-- 订单详情页 - 直接显示已保存的预览条目 -->
 <view class="page">
   <view wx:if="{{loading}}" class="loading">加载中...</view>
 
   <view wx:else class="content">
-    <!-- Record header -->
-    <view class="record-header">
-      <text class="record-sn">{{record.record_sn}}</text>
-      <text class="badge badge-{{record.status}}">{{formatStatus(record.status)}}</text>
+    <!-- 订单头部 -->
+    <view class="order-header" wx:if="{{order}}">
+      <text class="order-sn">{{order.id}}</text>
     </view>
 
-    <!-- Form values -->
-    <view class="section">
+    <!-- 预览条目 -->
+    <view class="section" wx:if="{{previewItems.length > 0}}">
       <text class="section-title">填写内容</text>
-      <view wx:for="{{formSteps}}" wx:key="id" class="step-values">
-        <text class="step-label">{{item.title}}</text>
-        <view wx:for="{{item.fields}}" wx:key="id" class="value-row" wx:if="{{item.visible}}">
-          <text class="value-label">{{item.label}}</text>
-          <text class="value-text">{{formatValue(item)}}</text>
+      <view class="detail-list">
+        <view class="detail-item" wx:for="{{previewItems}}" wx:key="key">
+          <text class="detail-label">{{item.label}}</text>
+          <text class="detail-value">{{item.value}}</text>
         </view>
       </view>
     </view>
 
-    <!-- Feedback section -->
-    <view class="section">
-      <text class="section-title">管理员反馈</text>
-      <view wx:if="{{feedbacks.length > 0}}">
-        <view wx:for="{{feedbacks}}" wx:key="id" class="feedback-item">
-          <view class="feedback-header">
-            <text class="feedback-admin">{{item.admin_name}}</text>
-            <text class="feedback-date">{{formatDate(item.created_at)}}</text>
-          </view>
-          <text class="feedback-content">{{item.content}}</text>
-        </view>
-      </view>
-      <view wx:else class="no-feedback">
-        <text>暂无反馈</text>
-      </view>
+    <!-- 空状态 -->
+    <view class="empty" wx:else>
+      <text>暂无订单信息</text>
     </view>
   </view>
 </view>

@@ -18,7 +18,6 @@ Page({
 
     console.log('[form-preview] 读取预览数据 keys:', Object.keys(formValues).length + '个', '字段定义:', fields.length + '个');
 
-    // 构建预览条目
     const previewItems = fields
       .filter(f => {
         const val = formValues[f.field_key];
@@ -42,7 +41,6 @@ Page({
   },
 
   formatDisplayValue(value, field) {
-    // 数组转中文顿号分隔
     if (Array.isArray(value)) {
       if (field.options) {
         return value.map(v => {
@@ -52,13 +50,10 @@ Page({
       }
       return value.join('、');
     }
-
-    // 单选：显示 label 而非 value
     if (field.options && Array.isArray(field.options)) {
       const opt = field.options.find(o => o.value === value || o.id === value);
       if (opt) return opt.label || opt.name || value;
     }
-
     return value;
   },
 
@@ -70,9 +65,10 @@ Page({
     if (this._submitting) return;
     this._submitting = true;
 
-    const { formValues, formId } = this.data;
+    const { formValues, formId, previewItems } = this.data;
     const keys = Object.keys(formValues);
     console.log('[form-preview] 提交 keys:', keys);
+    console.log('[form-preview] previewItems:', previewItems.length, '条');
 
     if (keys.length === 0) {
       wx.showToast({ title: '表单数据为空，请重新填写', icon: 'none' });
@@ -87,12 +83,24 @@ Page({
         action: 'submit',
         values: formValues,
       });
+      console.log('[form-preview] 提交成功 record:', record);
 
       wx.hideLoading();
       wx.showToast({ title: '提交成功', icon: 'success', duration: 2000 });
 
+      // 保存完整订单数据到本地，详情页直接读取（零网络请求）
+      const order = {
+        id: record.id || 'order_' + Date.now(),
+        formId,
+        formValues,
+        previewItems,
+        createdAt: Date.now(),
+      };
+      wx.setStorageSync('last_order_detail', order);
+      console.log('[form-preview] 订单已保存到 storage:', order.id);
+
       setTimeout(() => {
-        wx.redirectTo({ url: `/pages/record-detail/record-detail?id=${record.id}` });
+        wx.redirectTo({ url: `/pages/record-detail/record-detail?orderId=${order.id}` });
       }, 1500);
     } catch (err) {
       wx.hideLoading();
