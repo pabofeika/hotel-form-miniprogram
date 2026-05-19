@@ -8,8 +8,6 @@ Page({
     loading: true,
     theme: 'light',
   },
-  },
-
   onLoad(options) {
     console.log('[record-detail] onLoad options:', options);
     this.setData({ theme: theme.getTheme() });
