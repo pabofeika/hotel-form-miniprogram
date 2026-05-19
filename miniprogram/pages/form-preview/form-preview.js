@@ -1,60 +1,65 @@
 const api = require('../../utils/api');
-const { evaluateConditions } = require('../../utils/condition-engine');
-const { formatFieldValue } = require('../../utils/util');
-const { safeBack, backWithGuard } = require('../../utils/navigate');
+const { backWithGuard } = require('../../utils/navigate');
 
 Page({
   data: {
     formId: null,
     formValues: {},
-    steps: [],
+    previewItems: [],
     loading: true,
   },
 
-  onLoad(options) {
+  onLoad() {
     console.log('[form-preview] onLoad');
 
     const previewData = wx.getStorageSync('form_preview_data') || {};
-    console.log('[form-preview] 读取预览数据:', previewData.formValues ? Object.keys(previewData.formValues) : '空');
+    const formValues = previewData.formValues || {};
+    const fields = previewData.fields || [];
+
+    console.log('[form-preview] 读取预览数据 keys:', Object.keys(formValues).length + '个', '字段定义:', fields.length + '个');
+
+    // 构建预览条目
+    const previewItems = fields
+      .filter(f => {
+        const val = formValues[f.field_key];
+        return val !== undefined && val !== null && val !== '' &&
+          !(Array.isArray(val) && val.length === 0);
+      })
+      .map(f => ({
+        key: f.field_key,
+        label: f.label || f.title || f.name || f.field_key,
+        value: this.formatDisplayValue(formValues[f.field_key], f),
+      }));
+
+    console.log('[form-preview] 预览条目数:', previewItems.length);
 
     this.setData({
       formId: previewData.formId || '',
-      formValues: previewData.formValues || {},
+      formValues,
+      previewItems,
+      loading: false,
     });
-    this.loadFormDetail();
   },
 
-  onShow() { console.log('[form-preview] onShow'); },
-
-  onUnload() { console.log('[form-preview] onUnload'); },
-
-  async loadFormDetail() {
-    try {
-      const template = await api.get(`/forms/${this.data.formId}`);
-
-      const steps = template.steps.map(step => {
-        const fields = (step.fields || []).map(f => {
-          let conditionsObj = null;
-          if (typeof f.conditions === 'string') {
-            try { conditionsObj = JSON.parse(f.conditions); } catch (e) {}
-          } else {
-            conditionsObj = f.conditions;
-          }
-          const visible = !conditionsObj || evaluateConditions(conditionsObj, this.data.formValues);
-          return { ...f, visible };
-        });
-        return { ...step, fields };
-      });
-
-      this.setData({ steps, loading: false });
-    } catch (err) {
-      wx.showToast({ title: err.message || '加载失败', icon: 'none' });
-      this.setData({ loading: false });
+  formatDisplayValue(value, field) {
+    // 数组转中文顿号分隔
+    if (Array.isArray(value)) {
+      if (field.options) {
+        return value.map(v => {
+          const opt = field.options.find(o => o.value === v || o.id === v);
+          return opt ? (opt.label || opt.name || v) : v;
+        }).join('、');
+      }
+      return value.join('、');
     }
-  },
 
-  formatValue(field) {
-    return formatFieldValue(field, this.data.formValues[field.field_key]);
+    // 单选：显示 label 而非 value
+    if (field.options && Array.isArray(field.options)) {
+      const opt = field.options.find(o => o.value === value || o.id === value);
+      if (opt) return opt.label || opt.name || value;
+    }
+
+    return value;
   },
 
   goBack() {
@@ -65,12 +70,11 @@ Page({
     if (this._submitting) return;
     this._submitting = true;
 
-    const formValues = this.data.formValues;
+    const { formValues, formId } = this.data;
     const keys = Object.keys(formValues);
-    console.log('[form-preview] 提交数据 keys:', keys);
+    console.log('[form-preview] 提交 keys:', keys);
 
     if (keys.length === 0) {
-      wx.hideLoading();
       wx.showToast({ title: '表单数据为空，请重新填写', icon: 'none' });
       this._submitting = false;
       return;
@@ -79,27 +83,17 @@ Page({
     wx.showLoading({ title: '提交中...' });
     try {
       const record = await api.post('/records', {
-        form_template_id: this.data.formId,
+        form_template_id: formId,
         action: 'submit',
         values: formValues,
       });
-
-      // Subscribe message (optional)
-      try {
-        const { requestSubscribe } = require('../../utils/notify');
-        const result = await requestSubscribe(['your_template_id_here']);
-        await api.post('/notifications/subscribe', {
-          record_id: record.id,
-          tmplIds: result,
-        });
-      } catch (e) { /* optional */ }
 
       wx.hideLoading();
       wx.showToast({ title: '提交成功', icon: 'success', duration: 2000 });
 
       setTimeout(() => {
         wx.redirectTo({ url: `/pages/record-detail/record-detail?id=${record.id}` });
-      }, 2000);
+      }, 1500);
     } catch (err) {
       wx.hideLoading();
       wx.showToast({ title: err.message || '提交失败', icon: 'none' });

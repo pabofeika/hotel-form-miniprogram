@@ -1,28 +1,28 @@
 <!-- 提交预览页面 -->
 <view class="page">
-  <view class="preview-header">
-    <text class="preview-title">请确认提交信息</text>
-    <text class="preview-desc">请核对以下所有信息，确认无误后提交</text>
-  </view>
+  <view wx:if="{{loading}}" class="loading-container">加载中...</view>
 
-  <view class="preview-steps">
-    <view wx:for="{{steps}}" wx:key="id" class="preview-step">
-      <view class="preview-step-header">
-        <text class="preview-step-num">Step {{item.step_number}}</text>
-        <text class="preview-step-title">{{item.title}}</text>
-      </view>
+  <view wx:else>
+    <view class="preview-header">
+      <text class="preview-title">请确认提交信息</text>
+      <text class="preview-desc">请核对以下所有信息，确认无误后提交</text>
+    </view>
 
-      <view class="preview-fields">
-        <view wx:for="{{item.fields}}" wx:key="id" class="preview-field" wx:if="{{item.visible}}">
-          <text class="field-label">{{item.label}}</text>
-          <text class="field-value">{{formatValue(item)}}</text>
-        </view>
+    <!-- 预览条目列表 -->
+    <view class="preview-list" wx:if="{{previewItems.length > 0}}">
+      <view class="preview-item" wx:for="{{previewItems}}" wx:key="key">
+        <view class="preview-label">{{item.label}}</view>
+        <view class="preview-value">{{item.value}}</view>
       </view>
+    </view>
+
+    <view class="empty" wx:else>
+      <text class="empty-text">暂无预览数据</text>
     </view>
   </view>
 
   <view class="action-area">
-    <button class="btn-back" bindtap="goBack">返回修改</button>
-    <button class="btn-submit" bindtap="submitForm">确认提交</button>
+    <button class="btn btn-back" bindtap="goBack">返回修改</button>
+    <button class="btn btn-submit" bindtap="submitForm">确认提交</button>
   </view>
 </view>
