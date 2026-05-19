@@ -1,6 +1,6 @@
 /**
  * 主题管理工具
- * 通过行内 style 注入全部 CSS 变量，覆盖 page 根元素的值
+ * 通过行内 style 注入全部 CSS 变量 + 同步原生 tabBar
  */
 const THEME_KEY = 'app_theme';
 
@@ -58,16 +58,42 @@ function toggleTheme() {
 }
 
 /**
- * 生成行内样式字符串
- * 包含 CSS 变量 + 根 view 自身背景色
+ * 生成行内样式字符串（CSS 变量 + 根 view 自身背景/文字色）
  */
 function getThemeStyle(theme) {
   const vars = palettes[theme] || palettes.light;
-  const entries = Object.entries(vars);
-  // 额外显式设置根 view 自身的背景色和文字颜色（CSS 变量不影响自身）
+  const entries = Object.entries(vars).slice();
   entries.push(['background-color', vars['--color-bg']]);
   entries.push(['color', vars['--color-text-primary']]);
   return entries.map(([k, v]) => `${k}: ${v}`).join('; ');
 }
 
-module.exports = { getTheme, setTheme, toggleTheme, getThemeStyle };
+/**
+ * 同步原生 tabBar 样式
+ */
+function syncTabBar(theme) {
+  const isDark = theme === 'dark';
+  try {
+    wx.setTabBarStyle({
+      color: isDark ? '#8A8F98' : '#999999',
+      selectedColor: isDark ? '#4DA3FF' : '#2563eb',
+      backgroundColor: isDark ? '#111827' : '#FFFFFF',
+      borderStyle: isDark ? 'black' : 'white',
+    });
+  } catch (e) {
+    // TabBar API 不可用时静默失败
+  }
+}
+
+/**
+ * 全量应用主题（页面样式 + tabBar）
+ */
+function applyTheme(page, theme) {
+  const t = theme || getTheme();
+  if (page && page.setData) {
+    page.setData({ theme: t, rootStyle: getThemeStyle(t) });
+  }
+  syncTabBar(t);
+}
+
+module.exports = { getTheme, setTheme, toggleTheme, getThemeStyle, syncTabBar, applyTheme };

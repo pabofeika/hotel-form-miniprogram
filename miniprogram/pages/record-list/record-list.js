@@ -22,10 +22,12 @@ Page({
   onLoad() {
     const t = theme.getTheme();
     this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    theme.syncTabBar(t);
     this.loadRecords();
   },
 
   onShow() {
+    theme.syncTabBar(theme.getTheme());
     if (this.data.page > 1) {
       this.loadRecords(true);
     }
@@ -74,9 +76,12 @@ Page({
     theme.toggleTheme();
     const t = theme.getTheme();
     this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    theme.syncTabBar(t);
   },
 
   setTheme(t) {
     this.setData({ theme: t });
+    theme.syncTabBar(t);
+  },
   },
 });

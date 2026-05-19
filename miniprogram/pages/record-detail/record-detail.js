@@ -45,6 +45,7 @@ Page({
     theme.toggleTheme();
     const t = theme.getTheme();
     this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    theme.syncTabBar(t);
   },
 
   setTheme(t) {
