@@ -56,28 +56,54 @@ window.RecordDetailPage = {
         const data = await api.get('/records/' + this.recordId);
         this.record = data.record;
         this.feedbacks = data.feedbacks || [];
-        // Build form steps with values
+
+        // 获取表单模板结构
+        const template = data.template
+          ? await api.get('/forms/' + data.template.id)
+          : { steps: [] };
+
+        // 按 field_key 映射值
         const valueMap = {};
-        (data.values || []).forEach(v => { valueMap[v.field_id] = v.value; });
-        this.formSteps = (data.steps || []).map(s => ({
+        (data.values || []).forEach(v => {
+          const key = v.field ? v.field.field_key : v.field_key;
+          if (key) {
+            let val = v.value;
+            try { val = JSON.parse(val); } catch (e) {}
+            valueMap[key] = val;
+          }
+        });
+
+        // 构建步骤和字段（含值）
+        this.formSteps = (template.steps || []).map(s => ({
           ...s,
-          fields: (data.fields || []).filter(f => f.step_id === s.id).map(f => ({ ...f, _value: valueMap[f.id] })),
+          fields: (s.fields || []).map(f => ({
+            ...f,
+            _value: valueMap[f.field_key] || valueMap[f.key],
+          })),
         }));
       } catch (e) { ElementPlus.ElMessage.error(e.message); }
     },
     getFieldValue(field) {
-      if (!field._value) return '<span style="color:#999">未填写</span>';
+      const val = field._value;
+      if (val === undefined || val === null || val === '') return '<span style="color:#999">未填写</span>';
+
+      // 多选：尝试解析 JSON 字符串
       if (field.field_type === 'multi_select') {
+        let arr = val;
+        if (typeof val === 'string') { try { arr = JSON.parse(val); } catch (e) { arr = [val]; } }
+        if (!Array.isArray(arr)) arr = [arr];
         const opts = typeof field.options === 'string' ? JSON.parse(field.options || '[]') : (field.options || []);
-        const vals = Array.isArray(field._value) ? field._value : JSON.parse(field._value || '[]');
-        return vals.map(v => { const o = opts.find(o => o.value === v); return o ? o.label : v; }).join(', ');
+        return arr.map(v => { const o = opts.find(o => o.value === v); return o ? o.label : v; }).join(', ');
       }
+
+      // 单选：显示 label
       if (field.field_type === 'select') {
         const opts = typeof field.options === 'string' ? JSON.parse(field.options || '[]') : (field.options || []);
-        const o = opts.find(o => o.value === field._value);
-        return o ? o.label : field._value;
+        const o = opts.find(o => o.value === val);
+        return o ? o.label : val;
       }
-      return field._value;
+
+      return val;
     },
     async updateStatus(status) {
       try {
