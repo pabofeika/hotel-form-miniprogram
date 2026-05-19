@@ -37,6 +37,7 @@
           <field-renderer
             field="{{item}}"
             value="{{formValues[item.field_key]}}"
+            form-values="{{formValues}}"
             bind:change="onFieldChange"
             data-field-key="{{item.field_key}}"
           />

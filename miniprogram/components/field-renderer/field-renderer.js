@@ -2,6 +2,7 @@ Component({
   properties: {
     field: { type: Object, value: {} },
     value: { type: null, value: '' },
+    formValues: { type: Object, value: {} },
   },
 
   data: {
@@ -9,13 +10,14 @@ Component({
   },
 
   observers: {
-    field(field) {
+    'field, formValues'(field, formValues) {
       if (field.options) {
         let options = field.options;
         if (typeof options === 'string') {
           try { options = JSON.parse(options); } catch (e) { options = []; }
         }
-        // 主页模版选择：添加图片和描述
+
+        // 主页模版选择：根据 homepage_type 过滤 + 添加图片和描述
         if (field.field_key === 'homepage_template') {
           const imageMap = {
             'template_1': '/images/template-1-hd.jpg', 'template_2': '/images/template-2-hd.jpg',
@@ -35,13 +37,25 @@ Component({
             'template_5': '轻奢风格，适合设计型酒店', 'template_6': '家庭风格，适合公寓式酒店',
             'template_7': '生态风格，适合度假型酒店',
           };
-          options = options.map(o => ({
-            ...o,
-            image: imageMap[o.value] || '/images/template-default.png',
-            thumb: thumbMap[o.value] || '',
-            desc: descMap[o.value] || '',
-          }));
+
+          // 根据 homepage_type 过滤模版
+          const hpType = (formValues && formValues.homepage_type) || '';
+          let allowedValues = [];
+          if (hpType === 'skyworth_foot') {
+            allowedValues = ['template_7'];
+          } else {
+            allowedValues = ['template_1', 'template_2', 'template_3', 'template_4', 'template_5', 'template_6'];
+          }
+          options = options
+            .filter(o => allowedValues.includes(o.value))
+            .map(o => ({
+              ...o,
+              image: imageMap[o.value] || '/images/template-default.png',
+              thumb: thumbMap[o.value] || '',
+              desc: descMap[o.value] || '',
+            }));
         }
+
         this.setData({ parsedOptions: options });
       }
     },
