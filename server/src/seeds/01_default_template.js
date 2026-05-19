@@ -136,7 +136,7 @@ exports.seed = async function (knex) {
       ]),
       conditions: JSON.stringify({
         logic: 'and',
-        rules: [{ field: 'homepage_type', operator: 'in', value: ['skyworth_hotel', 'skyworth_foot', 'coocaa'] }],
+        rules: [{ field: 'homepage_type', operator: 'in', value: ['skyworth_hotel', 'skyworth_foot', 'third_party', 'coocaa'] }],
       }),
       sort_order: 2,
     },
