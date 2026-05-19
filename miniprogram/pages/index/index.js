@@ -8,12 +8,14 @@ Page({
     loading: true,
     hasDraft: false,
     draftFormId: null,
+    rootStyle: '',
     theme: 'light',
   },
 
   onLoad() {
     console.log('[index] onLoad');
-    this.setData({ theme: theme.getTheme() });
+    const t = theme.getTheme();
+    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
     this.loadForms();
     this.checkDraft();
   },
@@ -61,10 +63,11 @@ Page({
 
   toggleTheme() {
     theme.toggleTheme();
-    this.setData({ theme: theme.getTheme() });
+    const t = theme.getTheme();
+    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
   },
 
   setTheme(t) {
-    this.setData({ theme: t });
+    this.setData({ rootStyle: theme.getThemeStyle(t) });
   },
 });

@@ -10,6 +10,7 @@ Page({
     loading: true,
     formId: null,
     theme: 'light',
+    rootStyle: '',
     template: null,
     steps: [],
     currentStep: 1,
@@ -23,7 +24,8 @@ Page({
 
   onLoad(options) {
     console.log('[form-edit] onLoad, formId:', options.formId);
-    this.setData({ theme: theme.getTheme() });
+    const t = theme.getTheme();
+    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
     const formId = parseInt(options.formId);
     const resume = options.resume === 'true';
 
@@ -287,7 +289,8 @@ Page({
 
   toggleTheme() {
     theme.toggleTheme();
-    this.setData({ theme: theme.getTheme() });
+    const t = theme.getTheme();
+    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
   },
 
   setTheme(t) {

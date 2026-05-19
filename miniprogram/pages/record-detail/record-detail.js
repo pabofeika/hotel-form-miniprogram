@@ -7,10 +7,12 @@ Page({
     previewItems: [],
     loading: true,
     theme: 'light',
+    rootStyle: '',
   },
   onLoad(options) {
     console.log('[record-detail] onLoad options:', options);
-    this.setData({ theme: theme.getTheme() });
+    const t = theme.getTheme();
+    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
 
     // 支持 orderId 和 id 两种参数
     const orderId = options.orderId || options.id || '';
@@ -41,7 +43,8 @@ Page({
 
   toggleTheme() {
     theme.toggleTheme();
-    this.setData({ theme: theme.getTheme() });
+    const t = theme.getTheme();
+    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
   },
 
   setTheme(t) {

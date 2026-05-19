@@ -16,10 +16,12 @@ Page({
     loading: false,
     hasMore: true,
     theme: 'light',
+    rootStyle: '',
   },
 
   onLoad() {
-    this.setData({ theme: theme.getTheme() });
+    const t = theme.getTheme();
+    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
     this.loadRecords();
   },
 
@@ -70,7 +72,8 @@ Page({
 
   toggleTheme() {
     theme.toggleTheme();
-    this.setData({ theme: theme.getTheme() });
+    const t = theme.getTheme();
+    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
   },
 
   setTheme(t) {

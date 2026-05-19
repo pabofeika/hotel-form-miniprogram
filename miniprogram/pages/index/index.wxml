@@ -1,5 +1,5 @@
 <!-- 首页 - 表单模板列表 -->
-<view class="page theme-{{theme}}">
+<view class="page" style="{{rootStyle}}">
   <!-- 主题切换按钮 -->
   <view class="theme-toggle" bindtap="toggleTheme">
     <text wx:if="{{theme === 'light'}}">🌙</text>
