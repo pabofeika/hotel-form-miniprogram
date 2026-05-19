@@ -1,11 +1,9 @@
 /**
  * 主题管理工具
+ * 通过行内 style 注入全部 CSS 变量，覆盖 page 根元素的值
  */
 const THEME_KEY = 'app_theme';
 
-/**
- * 从 app.wxss 提取的亮/暗主题核心色板（行内样式用）
- */
 const palettes = {
   light: {
     '--color-bg': '#f4f6fa',
@@ -60,14 +58,16 @@ function toggleTheme() {
 }
 
 /**
- * 生成行内 CSS 变量字符串，直接用在页面根元素 style 上
- * 例如：<view style="{{rootStyle}}">
+ * 生成行内样式字符串
+ * 包含 CSS 变量 + 根 view 自身背景色
  */
 function getThemeStyle(theme) {
   const vars = palettes[theme] || palettes.light;
-  return Object.entries(vars)
-    .map(([k, v]) => `${k}: ${v}`)
-    .join('; ');
+  const entries = Object.entries(vars);
+  // 额外显式设置根 view 自身的背景色和文字颜色（CSS 变量不影响自身）
+  entries.push(['background-color', vars['--color-bg']]);
+  entries.push(['color', vars['--color-text-primary']]);
+  return entries.map(([k, v]) => `${k}: ${v}`).join('; ');
 }
 
 module.exports = { getTheme, setTheme, toggleTheme, getThemeStyle };
