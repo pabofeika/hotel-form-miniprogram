@@ -1,5 +1,6 @@
 const api = require('../../utils/api');
 const { backWithGuard } = require('../../utils/navigate');
+const theme = require('../../utils/theme');
 
 Page({
   data: {
@@ -7,10 +8,12 @@ Page({
     formValues: {},
     previewItems: [],
     loading: true,
+    theme: 'light',
   },
 
   onLoad() {
     console.log('[form-preview] onLoad');
+    this.setData({ theme: theme.getTheme() });
 
     const previewData = wx.getStorageSync('form_preview_data') || {};
     const formValues = previewData.formValues || {};
@@ -108,5 +111,14 @@ Page({
     } finally {
       setTimeout(() => { this._submitting = false; }, 1000);
     }
+  },
+
+  toggleTheme() {
+    theme.toggleTheme();
+    this.setData({ theme: theme.getTheme() });
+  },
+
+  setTheme(t) {
+    this.setData({ theme: t });
   },
 });

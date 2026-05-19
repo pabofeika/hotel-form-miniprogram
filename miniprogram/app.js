@@ -1,18 +1,17 @@
-// const auth = require('./utils/auth');
+const theme = require('./utils/theme');
 
 App({
   globalData: {
     userInfo: null,
     token: '',
-    apiBaseUrl: 'http://127.0.0.1:3000/api/v1', // 本地开发；上线前切回测试/正式地址
+    theme: 'light',
+    apiBaseUrl: 'http://127.0.0.1:3000/api/v1',
   },
 
   onLaunch() {
-    // 登录模块已注释（小程序无需登录）
-    // const token = wx.getStorageSync('user_token');
-    // if (token) {
-    //   this.globalData.token = token;
-    // }
+    // 初始化主题
+    const t = theme.getTheme();
+    this.globalData.theme = t;
   },
 
   onError(err) {
@@ -22,18 +21,4 @@ App({
   onUnhandledRejection(res) {
     console.error('[App onUnhandledRejection] 未处理 Promise 异常:', res.reason || res);
   },
-
-  // login() 已注释，保留代码以便后续恢复
-  // async login() {
-  //   try {
-  //     const { token, user } = await auth.login(this.globalData.apiBaseUrl);
-  //     this.globalData.token = token;
-  //     this.globalData.userInfo = user;
-  //     wx.setStorageSync('user_token', token);
-  //     return user;
-  //   } catch (err) {
-  //     console.error('Login failed:', err);
-  //     return null;
-  //   }
-  // },
 });

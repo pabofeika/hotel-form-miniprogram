@@ -1,14 +1,18 @@
 const { formatDate, formatStatus } = require('../../utils/util');
+const theme = require('../../utils/theme');
 
 Page({
   data: {
     order: null,
     previewItems: [],
     loading: true,
+    theme: 'light',
+  },
   },
 
   onLoad(options) {
     console.log('[record-detail] onLoad options:', options);
+    this.setData({ theme: theme.getTheme() });
 
     // 支持 orderId 和 id 两种参数
     const orderId = options.orderId || options.id || '';
@@ -36,4 +40,13 @@ Page({
 
   formatDate,
   formatStatus,
+
+  toggleTheme() {
+    theme.toggleTheme();
+    this.setData({ theme: theme.getTheme() });
+  },
+
+  setTheme(t) {
+    this.setData({ theme: t });
+  },
 });

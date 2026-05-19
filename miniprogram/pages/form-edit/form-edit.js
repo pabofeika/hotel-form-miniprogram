@@ -3,11 +3,13 @@ const cache = require('../../utils/cache');
 const { evaluateConditions } = require('../../utils/condition-engine');
 const { validateForm } = require('../../utils/validator');
 const { preventDoubleTap } = require('../../utils/navigate');
+const theme = require('../../utils/theme');
 
 Page({
   data: {
     loading: true,
     formId: null,
+    theme: 'light',
     template: null,
     steps: [],
     currentStep: 1,
@@ -21,6 +23,7 @@ Page({
 
   onLoad(options) {
     console.log('[form-edit] onLoad, formId:', options.formId);
+    this.setData({ theme: theme.getTheme() });
     const formId = parseInt(options.formId);
     const resume = options.resume === 'true';
 
@@ -280,5 +283,14 @@ Page({
     if (this.data.hasUnsavedChanges) {
       this.saveDraft();
     }
+  },
+
+  toggleTheme() {
+    theme.toggleTheme();
+    this.setData({ theme: theme.getTheme() });
+  },
+
+  setTheme(t) {
+    this.setData({ theme: t });
   },
 });

@@ -18,3 +18,6 @@
 
 /* 底部操作区 */
 .action-area { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: var(--space-md); padding: var(--space-md) var(--space-lg) 48rpx; background: rgba(255,255,255,0.92); backdrop-filter: blur(20rpx); box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.06); border-radius: 24rpx 24rpx 0 0; }
+
+/* 主题切换按钮 */
+.theme-toggle { position: fixed; top: 24rpx; right: 24rpx; z-index: 999; width: 60rpx; height: 60rpx; border-radius: var(--radius-full); background: var(--color-glass); backdrop-filter: blur(20rpx); -webkit-backdrop-filter: blur(20rpx); display: flex; align-items: center; justify-content: center; font-size: 30rpx; box-shadow: var(--shadow-md); border: 1rpx solid var(--color-border); }

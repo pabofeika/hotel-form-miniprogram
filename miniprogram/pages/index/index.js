@@ -1,5 +1,6 @@
 const api = require('../../utils/api');
 const cache = require('../../utils/cache');
+const theme = require('../../utils/theme');
 
 Page({
   data: {
@@ -7,10 +8,12 @@ Page({
     loading: true,
     hasDraft: false,
     draftFormId: null,
+    theme: 'light',
   },
 
   onLoad() {
     console.log('[index] onLoad');
+    this.setData({ theme: theme.getTheme() });
     this.loadForms();
     this.checkDraft();
   },
@@ -54,5 +57,14 @@ Page({
         url: `/pages/form-edit/form-edit?formId=${this.data.draftFormId}&resume=true`,
       });
     }
+  },
+
+  toggleTheme() {
+    theme.toggleTheme();
+    this.setData({ theme: theme.getTheme() });
+  },
+
+  setTheme(t) {
+    this.setData({ theme: t });
   },
 });

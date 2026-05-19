@@ -1,5 +1,6 @@
 const api = require('../../utils/api');
 const { formatDate, formatStatus } = require('../../utils/util');
+const theme = require('../../utils/theme');
 
 Page({
   data: {
@@ -14,9 +15,11 @@ Page({
     page: 1,
     loading: false,
     hasMore: true,
+    theme: 'light',
   },
 
   onLoad() {
+    this.setData({ theme: theme.getTheme() });
     this.loadRecords();
   },
 
@@ -63,5 +66,14 @@ Page({
       this.setData({ page: this.data.page + 1 });
       this.loadRecords();
     }
+  },
+
+  toggleTheme() {
+    theme.toggleTheme();
+    this.setData({ theme: theme.getTheme() });
+  },
+
+  setTheme(t) {
+    this.setData({ theme: t });
   },
 });

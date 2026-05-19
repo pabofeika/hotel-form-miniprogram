@@ -20,3 +20,6 @@
 
 /* 空状态 */
 .empty { text-align: center; padding: 200rpx 0; font-size: var(--font-size-base); color: var(--color-text-tertiary); }
+
+/* 主题切换按钮 */
+.theme-toggle { position: fixed; top: 24rpx; right: 24rpx; z-index: 999; width: 60rpx; height: 60rpx; border-radius: var(--radius-full); background: var(--color-glass); backdrop-filter: blur(20rpx); -webkit-backdrop-filter: blur(20rpx); display: flex; align-items: center; justify-content: center; font-size: 30rpx; box-shadow: var(--shadow-md); border: 1rpx solid var(--color-border); }

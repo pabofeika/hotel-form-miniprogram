@@ -1,5 +1,9 @@
-<!-- 订单详情页 - 直接显示已保存的预览条目 -->
-<view class="page">
+<!-- 订单详情页 -->
+<view class="page theme-{{theme}}">
+  <view class="theme-toggle" bindtap="toggleTheme">
+    <text wx:if="{{theme === 'light'}}">🌙</text>
+    <text wx:else>☀️</text>
+  </view>
   <view wx:if="{{loading}}" class="loading">加载中...</view>
 
   <view wx:else class="content">

@@ -1,5 +1,9 @@
 <!-- 提交预览页面 -->
-<view class="page">
+<view class="page theme-{{theme}}">
+  <view class="theme-toggle" bindtap="toggleTheme">
+    <text wx:if="{{theme === 'light'}}">🌙</text>
+    <text wx:else>☀️</text>
+  </view>
   <view wx:if="{{loading}}" class="loading-container">加载中...</view>
 
   <view wx:else>

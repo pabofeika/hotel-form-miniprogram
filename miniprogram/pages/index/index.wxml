@@ -1,5 +1,11 @@
 <!-- 首页 - 表单模板列表 -->
-<view class="page">
+<view class="page theme-{{theme}}">
+  <!-- 主题切换按钮 -->
+  <view class="theme-toggle" bindtap="toggleTheme">
+    <text wx:if="{{theme === 'light'}}">🌙</text>
+    <text wx:else>☀️</text>
+  </view>
+
   <!-- Loading -->
   <view wx:if="{{loading}}" class="loading">
     <text>加载中...</text>
@@ -40,7 +46,6 @@
 
     <!-- 空状态 -->
     <view wx:if="{{forms.length === 0 && !loading}}" class="empty">
-      <text class="empty-icon">📋</text>
       <text class="empty-text">暂无可填写的表单</text>
     </view>
   </view>
