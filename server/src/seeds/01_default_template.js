@@ -34,8 +34,7 @@ exports.seed = async function (knex) {
     { step_number: 1, title: '酒店基本信息', description: '请输入酒店的基本信息' },
     { step_number: 2, title: '主页与收银配置', description: '选择酒店主页类型和相关配置' },
     { step_number: 3, title: '客控与核心功能', description: '配置客控系统、数字人、点播、直播等功能' },
-    { step_number: 4, title: '酒店系统与服务对接', description: 'PMS、洗衣、机器人、商城等系统对接' },
-    { step_number: 5, title: '最终确认', description: '设备数量、交付信息和补充需求' },
+    { step_number: 4, title: '最终确认', description: '设备数量、交付信息和补充需求' },
   ];
 
   const stepIds = [];
@@ -127,7 +126,7 @@ exports.seed = async function (knex) {
       sort_order: 1,
     },
     {
-      step_index: 2, field_key: 'room_control_type', label: '客控类型选择', field_type: 'select',
+      step_index: 2,       field_key: 'room_control_type', label: '客控类型选择', field_type: 'select',
       is_required: true, placeholder: '请选择客控类型', help_text: '',
       options: JSON.stringify([
         { label: '无客控', value: 'none' },
@@ -136,7 +135,7 @@ exports.seed = async function (knex) {
       ]),
       conditions: JSON.stringify({
         logic: 'and',
-        rules: [{ field: 'homepage_type', operator: 'in', value: ['skyworth_hotel', 'skyworth_foot'] }],
+        rules: [{ field: 'homepage_type', operator: 'in', value: ['skyworth_hotel', 'skyworth_foot', 'coocaa'] }],
       }),
       sort_order: 2,
     },
@@ -227,136 +226,26 @@ exports.seed = async function (knex) {
       sort_order: 9,
     },
 
-    // === Step 4: 系统与服务对接 ===
+    // === Step 4: 最终确认 ===
     {
-      step_index: 3, field_key: 'call_front_desk', label: '电视呼叫前台功能', field_type: 'select',
-      is_required: true, placeholder: '请选择呼叫前台方式', help_text: '',
-      options: JSON.stringify([
-        { label: '云端方案（按设备端收费）', value: 'cloud' },
-        { label: '局域网方案（需要直播服务器）', value: 'lan' },
-        { label: '无打电话需求', value: 'none' },
-      ]),
-      conditions: JSON.stringify({
-        logic: 'and',
-        rules: [{ field: 'homepage_type', operator: 'in', value: ['skyworth_hotel', 'skyworth_foot', 'third_party'] }],
-      }),
-      sort_order: 1,
-    },
-    {
-      step_index: 3, field_key: 'has_pms', label: '是否有PMS（酒店管理系统）', field_type: 'select',
-      is_required: true, placeholder: '可在酒店主页显示入住人姓名或其他PMS拉通功能', help_text: '',
-      options: JSON.stringify([
-        { label: '有', value: 'yes' },
-        { label: '无', value: 'no' },
-      ]),
-      conditions: JSON.stringify({
-        logic: 'and',
-        rules: [{ field: 'homepage_type', operator: 'eq', value: 'skyworth_hotel' }],
-      }),
-      sort_order: 2,
-    },
-    {
-      step_index: 3, field_key: 'pms_vendor', label: 'PMS供应商名称', field_type: 'text',
-      is_required: true, placeholder: '请输入PMS供应商', help_text: '请根据实际酒店部署的酒管系统，提前告知使用PMS供应商。如没有适配的需要提前适配。已经适配的PMS代理商需要提供对应酒店信息进行拉通。',
-      conditions: JSON.stringify({
-        logic: 'and',
-        rules: [{ field: 'has_pms', operator: 'eq', value: 'yes' }],
-      }),
-      sort_order: 3,
-    },
-    {
-      step_index: 3, field_key: 'self_invoice', label: '是否使用自助开票', field_type: 'select',
-      is_required: false, placeholder: '开票需要提供对应二维码', help_text: '',
-      options: JSON.stringify([
-        { label: '是', value: 'yes' },
-        { label: '否', value: 'no' },
-      ]),
-      conditions: JSON.stringify({
-        logic: 'and',
-        rules: [
-          { field: 'homepage_type', operator: 'eq', value: 'skyworth_hotel' },
-          { field: 'has_pms', operator: 'eq', value: 'yes' },
-        ],
-      }),
-      sort_order: 4,
-    },
-    {
-      step_index: 3, field_key: 'self_laundry', label: '是否有自助洗衣', field_type: 'select',
-      is_required: false, placeholder: '实际酒店是否部署洗衣机', help_text: '',
-      options: JSON.stringify([
-        { label: '创维洗衣机', value: 'skyworth' },
-        { label: 'TCL洗衣机（需要提供对应对接信息）', value: 'tcl' },
-        { label: 'LG洗衣机（需要提供对应对接信息）', value: 'lg' },
-        { label: '其他洗衣机', value: 'other' },
-        { label: '无洗衣机需求', value: 'none' },
-      ]),
-      conditions: JSON.stringify({
-        logic: 'and',
-        rules: [{ field: 'homepage_type', operator: 'eq', value: 'skyworth_hotel' }],
-      }),
-      sort_order: 5,
-    },
-    {
-      step_index: 3, field_key: 'other_laundry_brand', label: '其他洗衣机品牌', field_type: 'text',
-      is_required: true, placeholder: '请输入洗衣机品牌', help_text: '需要明确酒店洗衣机是否含有线上实时获取洗衣机状态或预约功能。如普通洗衣机将不进行对接，仅在酒店页面上显示洗衣机位置信息。是智能洗衣机需要提前拉第三方品牌进行对接。',
-      conditions: JSON.stringify({
-        logic: 'and',
-        rules: [{ field: 'self_laundry', operator: 'eq', value: 'other' }],
-      }),
-      sort_order: 6,
-    },
-    {
-      step_index: 3, field_key: 'hotel_robots', label: '酒店机器人', field_type: 'multi_select',
-      is_required: false, placeholder: '需要提前对接酒店机器人信息', help_text: '',
-      options: JSON.stringify([
-        { label: '送物机器人', value: 'delivery' },
-        { label: '炒菜机器人', value: 'cooking' },
-        { label: '巡检机器人', value: 'patrol' },
-        { label: '垃圾回收机器人', value: 'trash' },
-        { label: '扫地机器人（带自清洗）', value: 'sweeping' },
-        { label: '无机器人需求', value: 'none' },
-      ]),
-      conditions: JSON.stringify({
-        logic: 'and',
-        rules: [{ field: 'homepage_type', operator: 'eq', value: 'skyworth_hotel' }],
-      }),
-      sort_order: 7,
-    },
-    {
-      step_index: 3, field_key: 'online_mall', label: '线上商城', field_type: 'select',
-      is_required: false, placeholder: '智慧主页含商城功能', help_text: '电视下单需要同步采购打印机',
-      options: JSON.stringify([
-        { label: '智慧主页-商城（需要配合硬件打印机）', value: 'smart_mall' },
-        { label: '第三方商城（提供二维码进行处理）', value: 'third_party' },
-        { label: '不使用', value: 'none' },
-      ]),
-      conditions: JSON.stringify({
-        logic: 'and',
-        rules: [{ field: 'homepage_type', operator: 'eq', value: 'skyworth_hotel' }],
-      }),
-      sort_order: 8,
-    },
-
-    // === Step 5: 最终确认 ===
-    {
-      step_index: 4, field_key: 'device_count', label: '酒店设备数量', field_type: 'number',
+      step_index: 3, field_key: 'device_count', label: '酒店设备数量', field_type: 'number',
       is_required: true, placeholder: '请输入整数', help_text: '请务必填写需要刷机数量，以确保后续设备维护方便。',
       validation: JSON.stringify({ min: 1, integer: true }),
       sort_order: 1,
     },
     {
-      step_index: 4, field_key: 'delivery_email', label: '刷机码交付人邮箱', field_type: 'email',
+      step_index: 3, field_key: 'delivery_email', label: '刷机码交付人邮箱', field_type: 'email',
       is_required: true, placeholder: '请输入正确邮箱', help_text: '请仔细填写内容，为方便交付给您刷机码方式',
       validation: JSON.stringify({ pattern: 'email' }),
       sort_order: 2,
     },
     {
-      step_index: 4, field_key: 'delivery_contact', label: '刷机码交付业务员', field_type: 'text',
+      step_index: 3, field_key: 'delivery_contact', label: '刷机码交付业务员', field_type: 'text',
       is_required: true, placeholder: '请输入创维业务人员名称', help_text: '',
       sort_order: 3,
     },
     {
-      step_index: 4, field_key: 'additional_notes', label: '其他信息补充', field_type: 'textarea',
+      step_index: 3, field_key: 'additional_notes', label: '其他信息补充', field_type: 'textarea',
       is_required: false, placeholder: '以上需求以外，请在这里输入详细需求', help_text: '',
       validation: JSON.stringify({ maxLength: 500 }),
       sort_order: 4,
