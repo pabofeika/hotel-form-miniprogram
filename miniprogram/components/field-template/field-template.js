@@ -19,12 +19,27 @@ Component({
         return;
       }
 
-      wx.previewImage({
-        current: url,
-        urls: [url],
-        fail(err) {
-          console.error('[field-template] previewImage fail:', err);
-          wx.showToast({ title: '图片预览失败', icon: 'none' });
+      wx.showLoading({ title: '加载图片' });
+
+      wx.getImageInfo({
+        src: url,
+        success: (res) => {
+          console.log('[field-template] getImageInfo success:', res.path);
+          wx.hideLoading();
+
+          wx.previewImage({
+            current: res.path,
+            urls: [res.path],
+            fail: (err) => {
+              console.error('[field-template] previewImage fail:', err);
+              wx.showToast({ title: '图片预览失败', icon: 'none' });
+            },
+          });
+        },
+        fail: (err) => {
+          wx.hideLoading();
+          console.error('[field-template] getImageInfo fail:', err);
+          wx.showToast({ title: '图片读取失败', icon: 'none' });
         },
       });
     },
