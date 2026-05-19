@@ -54,10 +54,18 @@ Page({
         cache.cacheFormStructure(formId, template);
       }
 
-      const steps = template.steps.map((s, i) => ({
-        ...s,
-        index: i + 1,
-      }));
+      const steps = template.steps
+        .filter(s => {
+          // 检查步骤级条件
+          if (!s.conditions) return true;
+          let cond = s.conditions;
+          if (typeof cond === 'string') { try { cond = JSON.parse(cond); } catch (e) { return true; } }
+          return evaluateConditions(cond, this.data.formValues);
+        })
+        .map((s, i) => ({
+          ...s,
+          index: i + 1,
+        }));
 
       this.setData({
         template,
@@ -93,10 +101,28 @@ Page({
   },
 
   renderCurrentFields() {
-    const { steps, currentStep, formValues } = this.data;
-    const step = steps.find(s => s.step_number === currentStep);
+    const { currentStep, formValues } = this.data;
+
+    // 重新过滤步骤（步骤级条件可能已变化）
+    const allSteps = this.data.template ? this.data.template.steps : [];
+    const filteredSteps = allSteps
+      .filter(s => {
+        if (!s.conditions) return true;
+        let cond = s.conditions;
+        if (typeof cond === 'string') { try { cond = JSON.parse(cond); } catch (e) { return true; } }
+        return evaluateConditions(cond, formValues);
+      })
+      .map((s, i) => ({ ...s, index: i + 1 }));
+
+    // 如果当前步骤被隐藏了，后退到前一步
+    let targetStep = currentStep;
+    if (targetStep > filteredSteps.length) {
+      targetStep = filteredSteps.length;
+    }
+
+    const step = filteredSteps[targetStep - 1];
     if (!step || !step.fields) {
-      this.setData({ visibleFields: [] });
+      this.setData({ visibleFields: [], steps: filteredSteps, totalSteps: filteredSteps.length });
       return;
     }
 
@@ -116,7 +142,13 @@ Page({
       return true;
     });
 
-    this.setData({ visibleFields });
+    this.setData({
+      visibleFields,
+      steps: filteredSteps,
+      totalSteps: filteredSteps.length,
+      currentStep: targetStep,
+      currentStepData: filteredSteps[targetStep - 1] || {},
+    });
   },
 
   onFieldChange(e) {

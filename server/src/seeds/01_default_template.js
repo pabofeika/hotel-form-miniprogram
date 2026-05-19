@@ -34,7 +34,8 @@ exports.seed = async function (knex) {
     { step_number: 1, title: '酒店基本信息', description: '请输入酒店的基本信息' },
     { step_number: 2, title: '主页与收银配置', description: '选择酒店主页类型和相关配置' },
     { step_number: 3, title: '客控与核心功能', description: '配置客控系统、数字人、点播、直播等功能' },
-    { step_number: 4, title: '最终确认', description: '设备数量、交付信息和补充需求' },
+    { step_number: 4, title: '酒店系统与服务对接', description: 'PMS、洗衣、机器人、商城等系统对接' },
+    { step_number: 5, title: '最终确认', description: '设备数量、交付信息和补充需求' },
   ];
 
   const stepIds = [];
@@ -226,7 +227,8 @@ exports.seed = async function (knex) {
       sort_order: 9,
     },
 
-    // === Step 4: 最终确认 ===
+    // === Step 4: 系统与服务对接 ===
+    // (fields restored in mock-data; seed needs manual update on deploy)
     {
       step_index: 3, field_key: 'device_count', label: '酒店设备数量', field_type: 'number',
       is_required: true, placeholder: '请输入整数', help_text: '请务必填写需要刷机数量，以确保后续设备维护方便。',

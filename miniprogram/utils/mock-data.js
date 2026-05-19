@@ -40,12 +40,26 @@ const defaultFormTemplate = {
       ]
     },
     {
-      "id": 4, "step_number": 4, "title": "最终确认", "description": "设备数量、交付信息和补充需求",
+      "id": 4, "step_number": 4, "title": "酒店系统与服务对接", "description": "PMS、洗衣、机器人、商城等系统对接",
+      "conditions": {"logic":"and","rules":[{"field":"homepage_type","operator":"neq","value":"coocaa"}]},
       "fields": [
-        {"id":24,"step_id":4,"field_key":"device_count","label":"酒店设备数量","field_type":"number","is_required":1,"placeholder":"请输入整数","help_text":"请务必填写需要刷机数量","sort_order":1},
-        {"id":25,"step_id":4,"field_key":"delivery_email","label":"刷机码交付人邮箱","field_type":"email","is_required":1,"placeholder":"请输入正确邮箱","help_text":"为方便交付给您刷机码","sort_order":2},
-        {"id":26,"step_id":4,"field_key":"delivery_contact","label":"刷机码交付业务员","field_type":"text","is_required":1,"placeholder":"请输入创维业务人员名称","sort_order":3},
-        {"id":27,"step_id":4,"field_key":"additional_notes","label":"其他信息补充","field_type":"textarea","is_required":0,"placeholder":"以上需求以外，请在这里输入详细需求","sort_order":4}
+        {"id":16,"step_id":4,"field_key":"call_front_desk","label":"电视呼叫前台功能","field_type":"select","is_required":1,"options":[{"label":"云端方案","value":"cloud"},{"label":"局域网方案","value":"lan"},{"label":"无打电话需求","value":"none"}],"conditions":{"logic":"and","rules":[{"field":"homepage_type","operator":"in","value":["skyworth_hotel","skyworth_foot","third_party"]}]},"sort_order":1},
+        {"id":17,"step_id":4,"field_key":"has_pms","label":"是否有PMS（酒店管理系统）","field_type":"select","is_required":1,"options":[{"label":"有","value":"yes"},{"label":"无","value":"no"}],"conditions":{"logic":"and","rules":[{"field":"homepage_type","operator":"eq","value":"skyworth_hotel"}]},"sort_order":2},
+        {"id":18,"step_id":4,"field_key":"pms_vendor","label":"PMS供应商名称","field_type":"text","is_required":1,"placeholder":"请输入PMS供应商","conditions":{"logic":"and","rules":[{"field":"has_pms","operator":"eq","value":"yes"}]},"sort_order":3},
+        {"id":19,"step_id":4,"field_key":"self_invoice","label":"是否使用自助开票","field_type":"select","is_required":0,"options":[{"label":"是","value":"yes"},{"label":"否","value":"no"}],"conditions":{"logic":"and","rules":[{"field":"homepage_type","operator":"eq","value":"skyworth_hotel"},{"field":"has_pms","operator":"eq","value":"yes"}]},"sort_order":4},
+        {"id":20,"step_id":4,"field_key":"self_laundry","label":"是否有自助洗衣","field_type":"select","is_required":0,"options":[{"label":"创维洗衣机","value":"skyworth"},{"label":"TCL洗衣机","value":"tcl"},{"label":"LG洗衣机","value":"lg"},{"label":"其他洗衣机","value":"other"},{"label":"无洗衣机需求","value":"none"}],"conditions":{"logic":"and","rules":[{"field":"homepage_type","operator":"eq","value":"skyworth_hotel"}]},"sort_order":5},
+        {"id":21,"step_id":4,"field_key":"other_laundry_brand","label":"其他洗衣机品牌","field_type":"text","is_required":1,"placeholder":"请输入洗衣机品牌","conditions":{"logic":"and","rules":[{"field":"self_laundry","operator":"eq","value":"other"}]},"sort_order":6},
+        {"id":22,"step_id":4,"field_key":"hotel_robots","label":"酒店机器人","field_type":"multi_select","is_required":0,"options":[{"label":"送物机器人","value":"delivery"},{"label":"炒菜机器人","value":"cooking"},{"label":"巡检机器人","value":"patrol"},{"label":"垃圾回收机器人","value":"trash"},{"label":"扫地机器人","value":"sweeping"},{"label":"无机器人需求","value":"none"}],"conditions":{"logic":"and","rules":[{"field":"homepage_type","operator":"eq","value":"skyworth_hotel"}]},"sort_order":7},
+        {"id":23,"step_id":4,"field_key":"online_mall","label":"线上商城","field_type":"select","is_required":0,"options":[{"label":"智慧主页-商城","value":"smart_mall"},{"label":"第三方商城","value":"third_party"},{"label":"不使用","value":"none"}],"help_text":"电视下单需要同步采购打印机","conditions":{"logic":"and","rules":[{"field":"homepage_type","operator":"eq","value":"skyworth_hotel"}]},"sort_order":8}
+      ]
+    },
+    {
+      "id": 5, "step_number": 5, "title": "最终确认", "description": "设备数量、交付信息和补充需求",
+      "fields": [
+        {"id":24,"step_id":5,"field_key":"device_count","label":"酒店设备数量","field_type":"number","is_required":1,"placeholder":"请输入整数","help_text":"请务必填写需要刷机数量","sort_order":1},
+        {"id":25,"step_id":5,"field_key":"delivery_email","label":"刷机码交付人邮箱","field_type":"email","is_required":1,"placeholder":"请输入正确邮箱","help_text":"为方便交付给您刷机码","sort_order":2},
+        {"id":26,"step_id":5,"field_key":"delivery_contact","label":"刷机码交付业务员","field_type":"text","is_required":1,"placeholder":"请输入创维业务人员名称","sort_order":3},
+        {"id":27,"step_id":5,"field_key":"additional_notes","label":"其他信息补充","field_type":"textarea","is_required":0,"placeholder":"以上需求以外，请在这里输入详细需求","sort_order":4}
       ]
     }
   ]
