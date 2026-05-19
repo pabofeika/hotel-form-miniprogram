@@ -4,7 +4,7 @@ App({
   globalData: {
     userInfo: null,
     token: '',
-    apiBaseUrl: 'http://192.168.32.245:3000/api/v1', // 测试环境；上线后切回正式地址
+    apiBaseUrl: 'http://127.0.0.1:3000/api/v1', // 本地开发；上线前切回测试/正式地址
   },
 
   onLaunch() {
