@@ -11,6 +11,7 @@ Component({
 
     onPreviewImage(e) {
       const url = e.currentTarget.dataset.url;
+      console.log('[field-template] options:', JSON.stringify(this.properties.options));
       console.log('[field-template] preview url:', url);
 
       if (!url) {
