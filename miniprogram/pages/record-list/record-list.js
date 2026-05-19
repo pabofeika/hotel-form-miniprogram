@@ -83,5 +83,4 @@ Page({
     this.setData({ theme: t });
     theme.syncTabBar(t);
   },
-  },
 });
