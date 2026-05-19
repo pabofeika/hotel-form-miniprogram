@@ -69,17 +69,23 @@ function getThemeStyle(theme) {
 }
 
 /**
- * 同步原生 tabBar 样式
+ * 同步原生 tabBar 样式 + 图标
  */
 function syncTabBar(theme) {
   const isDark = theme === 'dark';
   try {
     wx.setTabBarStyle({
       color: isDark ? '#8A8F98' : '#999999',
-      selectedColor: isDark ? '#4DA3FF' : '#2563eb',
+      selectedColor: isDark ? '#90CAF9' : '#2563eb',
       backgroundColor: isDark ? '#111827' : '#FFFFFF',
       borderStyle: isDark ? 'black' : 'white',
     });
+    // 切换图标（暗色用亮色版）
+    const tabItems = [
+      { index: 0, iconPath: isDark ? 'images/home_dark.png' : 'images/home.png', selectedIconPath: isDark ? 'images/home_active_dark.png' : 'images/home_active.png' },
+      { index: 1, iconPath: isDark ? 'images/list_dark.png' : 'images/list.png', selectedIconPath: isDark ? 'images/list_active_dark.png' : 'images/list_active.png' },
+    ];
+    tabItems.forEach(item => wx.setTabBarItem(item));
   } catch (e) {
     // TabBar API 不可用时静默失败
   }
