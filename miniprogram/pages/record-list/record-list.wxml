@@ -1,5 +1,5 @@
 <!-- 我的提交列表 -->
-<view class="page page-{{theme}}">
+<view class="page theme-{{theme}}">
   <!-- 主题切换 -->
   <view class="theme-toggle" bindtap="toggleTheme">
     <text wx:if="{{theme === 'light'}}">🌙</text>

@@ -8,14 +8,11 @@
 .field-error { margin: -8rpx var(--space-lg) var(--space-md); padding: var(--space-xs) var(--space-md); background: var(--color-error-bg); border-radius: var(--radius-sm); border-left: 4rpx solid var(--color-error); }
 .field-error text { font-size: var(--font-size-xs); color: var(--color-error); font-weight: 500; }
 
-/* 底部悬浮操作栏 - 亮色 */
+/* 底部悬浮操作栏 */
 .action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: var(--space-md); padding: var(--space-md) var(--space-lg) 48rpx; background: rgba(255,255,255,0.92); backdrop-filter: blur(20rpx); box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.06); border-radius: 24rpx 24rpx 0 0; z-index: 100; }
-/* 暗色模式 - 底部操作栏 */
-.page-dark .action-bar { background: rgba(15,17,23,0.92); }
 
 /* 右侧按钮组 */
 .action-right { display: flex; gap: var(--space-sm); flex-shrink: 0; }
 
 /* 主题切换按钮 */
 .theme-toggle { position: fixed; top: 24rpx; right: 24rpx; z-index: 999; width: 60rpx; height: 60rpx; border-radius: var(--radius-full); background: rgba(255,255,255,0.82); backdrop-filter: blur(20rpx); display: flex; align-items: center; justify-content: center; font-size: 30rpx; box-shadow: var(--shadow-md); border: 1rpx solid var(--color-border); }
-.page-dark .theme-toggle { background: rgba(26,29,39,0.88); }
