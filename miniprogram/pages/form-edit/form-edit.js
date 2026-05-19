@@ -228,14 +228,14 @@ Page({
     cache.clearDraft(this.data.formId);
 
     // 把所有步骤的字段打平，连同填写值一起传给预览页
-    const allFields = this.data.steps.reduce((list, step) => {
+    const previewFields = (this.data.steps || []).reduce((list, step) => {
       return list.concat(step.fields || []);
     }, []);
 
     wx.setStorageSync('form_preview_data', {
       formId: this.data.formId,
-      formValues: this.data.formValues,
-      fields: allFields,
+      formValues: this.data.formValues || {},
+      fields: previewFields,
     });
 
     wx.navigateTo({
