@@ -119,6 +119,10 @@ exports.seed = async function (knex) {
         { label: '模版一', value: 'template_1' },
         { label: '模版二', value: 'template_2' },
         { label: '模版三', value: 'template_3' },
+        { label: '模版四', value: 'template_4' },
+        { label: '模版五', value: 'template_5' },
+        { label: '模版六', value: 'template_6' },
+        { label: '模版七', value: 'template_7' },
       ]),
       conditions: JSON.stringify({
         logic: 'and',
