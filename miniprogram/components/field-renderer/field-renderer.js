@@ -18,10 +18,16 @@ Component({
         // 主页模版选择：添加图片和描述
         if (field.field_key === 'homepage_template') {
           const imageMap = {
-            'template_1': '/images/template-1.png', 'template_2': '/images/template-2.png',
-            'template_3': '/images/template-3.png', 'template_4': '/images/template-4.png',
-            'template_5': '/images/template-5.png', 'template_6': '/images/template-6.png',
-            'template_7': '/images/template-7.png',
+            'template_1': '/images/template-1-hd.png', 'template_2': '/images/template-2-hd.png',
+            'template_3': '/images/template-3-hd.png', 'template_4': '/images/template-4-hd.png',
+            'template_5': '/images/template-5-hd.png', 'template_6': '/images/template-6-hd.png',
+            'template_7': '/images/template-7-hd.png',
+          };
+          const thumbMap = {
+            'template_1': '/images/template-1.jpg', 'template_2': '/images/template-2.jpg',
+            'template_3': '/images/template-3.jpg', 'template_4': '/images/template-4.jpg',
+            'template_5': '/images/template-5.jpg', 'template_6': '/images/template-6.jpg',
+            'template_7': '/images/template-7.jpg',
           };
           const descMap = {
             'template_1': '经典布局，适合大多数酒店', 'template_2': '简约风格，适合精品酒店',
@@ -32,6 +38,7 @@ Component({
           options = options.map(o => ({
             ...o,
             image: imageMap[o.value] || '/images/template-default.png',
+            thumb: thumbMap[o.value] || '',
             desc: descMap[o.value] || '',
           }));
         }
