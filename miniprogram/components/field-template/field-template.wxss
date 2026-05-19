@@ -1,9 +1,48 @@
+/** 主页模版选择 - 卡片网格 */
 .field-template { margin-bottom: 0; }
-.template-group { display: flex; flex-direction: column; gap: var(--space-md); }
-.template-item { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md); border: 1.5rpx solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-bg-card); transition: all 0.2s; }
-.template-item.active { border-color: var(--color-border-focus); background: var(--color-bg-hover); box-shadow: 0 0 0 2rpx rgba(37,99,235,0.08); }
-.template-radio { flex-shrink: 0; }
-.template-image { width: 120rpx; height: 120rpx; border-radius: var(--radius-md); flex-shrink: 0; background: var(--color-bg); object-fit: cover; }
+
+.template-list { display: flex; flex-direction: column; gap: var(--space-md); }
+
+.template-card {
+  display: flex; align-items: center; gap: var(--space-md);
+  padding: var(--space-md);
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-card);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.template-card.active {
+  border-color: var(--color-primary);
+  background: var(--color-bg-hover);
+  box-shadow: 0 0 0 3rpx var(--color-border-active);
+}
+
+.template-image {
+  width: 140rpx; height: 100rpx;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  background: var(--color-bg-input);
+  object-fit: cover;
+}
+
 .template-content { flex: 1; min-width: 0; }
 .template-title { font-size: var(--font-size-base); font-weight: 700; color: var(--color-text-primary); display: block; margin-bottom: 4rpx; }
 .template-desc { font-size: var(--font-size-xs); color: var(--color-text-tertiary); display: block; }
+
+/* 选中勾 */
+.check-circle {
+  width: 36rpx; height: 36rpx; border-radius: var(--radius-full);
+  border: 2rpx solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  color: #fff;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+.check-circle.checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
