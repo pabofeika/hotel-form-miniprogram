@@ -8,20 +8,19 @@ Page({
     loading: true,
     hasDraft: false,
     draftFormId: null,
-    rootStyle: '',
     theme: 'light',
   },
 
   onLoad() {
     console.log('[index] onLoad');
-    const t = theme.getTheme();
-    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
-    theme.syncTabBar(t);
+    this.setData({ theme: theme.getTheme() });
+    theme.syncTabBar(theme.getTheme());
     this.loadForms();
     this.checkDraft();
   },
 
   onShow() {
+    this.setData({ theme: theme.getTheme() });
     theme.syncTabBar(theme.getTheme());
     this.checkDraft();
   },
@@ -66,12 +65,12 @@ Page({
   toggleTheme() {
     theme.toggleTheme();
     const t = theme.getTheme();
-    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    this.setData({ theme: t });
     theme.syncTabBar(t);
   },
 
   setTheme(t) {
-    this.setData({ rootStyle: theme.getThemeStyle(t) });
+    this.setData({ theme: t });
     theme.syncTabBar(t);
   },
 });

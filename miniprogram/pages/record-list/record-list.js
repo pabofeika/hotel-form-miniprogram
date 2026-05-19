@@ -16,17 +16,16 @@ Page({
     loading: false,
     hasMore: true,
     theme: 'light',
-    rootStyle: '',
   },
 
   onLoad() {
-    const t = theme.getTheme();
-    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
-    theme.syncTabBar(t);
+    this.setData({ theme: theme.getTheme() });
+    theme.syncTabBar(theme.getTheme());
     this.loadRecords();
   },
 
   onShow() {
+    this.setData({ theme: theme.getTheme() });
     theme.syncTabBar(theme.getTheme());
     if (this.data.page > 1) {
       this.loadRecords(true);
@@ -75,7 +74,7 @@ Page({
   toggleTheme() {
     theme.toggleTheme();
     const t = theme.getTheme();
-    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    this.setData({ theme: t });
     theme.syncTabBar(t);
   },
 

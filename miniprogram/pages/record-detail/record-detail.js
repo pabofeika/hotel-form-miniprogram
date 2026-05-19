@@ -7,12 +7,10 @@ Page({
     previewItems: [],
     loading: true,
     theme: 'light',
-    rootStyle: '',
   },
   onLoad(options) {
     console.log('[record-detail] onLoad options:', options);
-    const t = theme.getTheme();
-    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    this.setData({ theme: theme.getTheme() });
 
     // 支持 orderId 和 id 两种参数
     const orderId = options.orderId || options.id || '';
@@ -44,11 +42,17 @@ Page({
   toggleTheme() {
     theme.toggleTheme();
     const t = theme.getTheme();
-    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    this.setData({ theme: t });
     theme.syncTabBar(t);
   },
 
   setTheme(t) {
     this.setData({ theme: t });
+    theme.syncTabBar(t);
+  },
+
+  onShow() {
+    this.setData({ theme: theme.getTheme() });
+    theme.syncTabBar(theme.getTheme());
   },
 });

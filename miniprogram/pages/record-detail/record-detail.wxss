@@ -1,5 +1,6 @@
 /** 订单详情 - 直接展示预览条目 */
 .page { padding: var(--space-xl); background: var(--color-bg); min-height: 100vh; }
+.page-dark { background: #0f1117; }
 .loading { text-align: center; padding: 300rpx 0; font-size: var(--font-size-base); color: var(--color-text-tertiary); }
 
 /* 顶部状态头 */
@@ -12,7 +13,6 @@
 .section-title { font-size: var(--font-size-lg); font-weight: 700; display: block; margin-bottom: var(--space-lg); color: var(--color-text-primary); }
 
 /* 预览条目列表 */
-.detail-list { }
 .detail-item { display: flex; flex-direction: column; padding: var(--space-sm) 0; border-bottom: 1rpx solid var(--color-border); }
 .detail-item:last-child { border-bottom: none; }
 .detail-label { font-size: var(--font-size-xs); color: var(--color-text-tertiary); display: block; margin-bottom: 4rpx; }
@@ -22,4 +22,5 @@
 .empty { text-align: center; padding: 200rpx 0; font-size: var(--font-size-base); color: var(--color-text-tertiary); }
 
 /* 主题切换按钮 */
-.theme-toggle { position: fixed; top: 24rpx; right: 24rpx; z-index: 999; width: 60rpx; height: 60rpx; border-radius: var(--radius-full); background: var(--color-glass); backdrop-filter: blur(20rpx); -webkit-backdrop-filter: blur(20rpx); display: flex; align-items: center; justify-content: center; font-size: 30rpx; box-shadow: var(--shadow-md); border: 1rpx solid var(--color-border); }
+.theme-toggle { position: fixed; top: 24rpx; right: 24rpx; z-index: 999; width: 60rpx; height: 60rpx; border-radius: var(--radius-full); background: rgba(255,255,255,0.82); backdrop-filter: blur(20rpx); display: flex; align-items: center; justify-content: center; font-size: 30rpx; box-shadow: var(--shadow-md); border: 1rpx solid var(--color-border); }
+.page-dark .theme-toggle { background: rgba(26,29,39,0.88); }

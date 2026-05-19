@@ -9,13 +9,11 @@ Page({
     previewItems: [],
     loading: true,
     theme: 'light',
-    rootStyle: '',
   },
 
   onLoad() {
     console.log('[form-preview] onLoad');
-    const t = theme.getTheme();
-    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    this.setData({ theme: theme.getTheme() });
 
     const previewData = wx.getStorageSync('form_preview_data') || {};
     const formValues = previewData.formValues || {};
@@ -118,11 +116,17 @@ Page({
   toggleTheme() {
     theme.toggleTheme();
     const t = theme.getTheme();
-    this.setData({ theme: t, rootStyle: theme.getThemeStyle(t) });
+    this.setData({ theme: t });
     theme.syncTabBar(t);
   },
 
   setTheme(t) {
     this.setData({ theme: t });
+    theme.syncTabBar(t);
+  },
+
+  onShow() {
+    this.setData({ theme: theme.getTheme() });
+    theme.syncTabBar(theme.getTheme());
   },
 });

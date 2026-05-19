@@ -1,5 +1,5 @@
 <!-- 提交预览页面 -->
-<view class="page" style="{{rootStyle}}">
+<view class="page page-{{theme}}">
   <view class="theme-toggle" bindtap="toggleTheme">
     <text wx:if="{{theme === 'light'}}">🌙</text>
     <text wx:else>☀️</text>
