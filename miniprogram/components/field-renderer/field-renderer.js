@@ -18,10 +18,10 @@ Component({
         // 主页模版选择：添加图片和描述
         if (field.field_key === 'homepage_template') {
           const imageMap = {
-            'template_1': '/images/template-1-hd.png', 'template_2': '/images/template-2-hd.png',
-            'template_3': '/images/template-3-hd.png', 'template_4': '/images/template-4-hd.png',
-            'template_5': '/images/template-5-hd.png', 'template_6': '/images/template-6-hd.png',
-            'template_7': '/images/template-7-hd.png',
+            'template_1': '/images/template-1-hd.jpg', 'template_2': '/images/template-2-hd.jpg',
+            'template_3': '/images/template-3-hd.jpg', 'template_4': '/images/template-4-hd.jpg',
+            'template_5': '/images/template-5-hd.jpg', 'template_6': '/images/template-6-hd.jpg',
+            'template_7': '/images/template-7-hd.jpg',
           };
           const thumbMap = {
             'template_1': '/images/template-1.jpg', 'template_2': '/images/template-2.jpg',
