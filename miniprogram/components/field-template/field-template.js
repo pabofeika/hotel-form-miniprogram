@@ -1,6 +1,6 @@
 Component({
   properties: { options: { type: Array, value: [] }, value: { type: null, value: '' } },
-  data: { currentValue: '' },
+  data: { currentValue: '', previewVisible: false, previewImageUrl: '' },
   observers: { value(v) { this.setData({ currentValue: v || '' }); } },
   methods: {
     onSelect(e) {
@@ -8,11 +8,14 @@ Component({
       this.setData({ currentValue: val });
       this.triggerEvent('change', val);
     },
-    previewImage(e) {
-      const src = e.currentTarget.dataset.src;
-      if (src) {
-        wx.previewImage({ urls: [src], current: src });
+    openPreview(e) {
+      const url = e.currentTarget.dataset.url;
+      console.log('[preview] url:', url);
+      if (!url) {
+        wx.showToast({ title: '图片地址为空', icon: 'none' });
+        return;
       }
+      wx.previewImage({ current: url, urls: [url] });
     },
   },
 });

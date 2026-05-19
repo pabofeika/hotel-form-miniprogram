@@ -2,8 +2,8 @@
   <view class="template-list">
     <view wx:for="{{options}}" wx:key="value" class="template-card {{item.value === currentValue ? 'active' : ''}}"
       bindtap="onSelect" data-value="{{item.value}}">
-      <image class="template-image" src="{{item.thumb || item.image || '/images/template-default.png'}}" mode="aspectFill"
-        catchtap="previewImage" data-src="{{item.image}}" />
+      <image class="template-image" src="{{item.thumb || item.image}}" mode="aspectFill"
+        catchtap="openPreview" data-url="{{item.image}}" />
       <view class="template-content">
         <text class="template-title">{{item.label}}</text>
         <text wx:if="{{item.desc}}" class="template-desc">{{item.desc}}</text>

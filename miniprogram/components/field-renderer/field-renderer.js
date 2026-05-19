@@ -50,7 +50,7 @@ Component({
             .filter(o => allowedValues.includes(o.value))
             .map(o => ({
               ...o,
-              image: imageMap[o.value] || '/images/template-default.png',
+              image: imageMap[o.value],
               thumb: thumbMap[o.value] || '',
               desc: descMap[o.value] || '',
             }));
