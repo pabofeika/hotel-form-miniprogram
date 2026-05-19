@@ -13,11 +13,14 @@ Page({
 
   onLoad(options) {
     console.log('[form-preview] onLoad');
-    const formId = parseInt(options.formId);
-    // 从 globalData 读取填写的值（避免 URL 传参截断）
-    const formValues = getApp().globalData.previewFormValues || {};
 
-    this.setData({ formId, formValues });
+    const previewData = wx.getStorageSync('form_preview_data') || {};
+    console.log('[form-preview] 读取预览数据:', previewData.formValues ? Object.keys(previewData.formValues) : '空');
+
+    this.setData({
+      formId: previewData.formId || '',
+      formValues: previewData.formValues || {},
+    });
     this.loadFormDetail();
   },
 
@@ -62,12 +65,23 @@ Page({
     if (this._submitting) return;
     this._submitting = true;
 
+    const formValues = this.data.formValues;
+    const keys = Object.keys(formValues);
+    console.log('[form-preview] 提交数据 keys:', keys);
+
+    if (keys.length === 0) {
+      wx.hideLoading();
+      wx.showToast({ title: '表单数据为空，请重新填写', icon: 'none' });
+      this._submitting = false;
+      return;
+    }
+
     wx.showLoading({ title: '提交中...' });
     try {
       const record = await api.post('/records', {
         form_template_id: this.data.formId,
         action: 'submit',
-        values: this.data.formValues,
+        values: formValues,
       });
 
       // Subscribe message (optional)
