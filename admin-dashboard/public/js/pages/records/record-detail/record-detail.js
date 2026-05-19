@@ -27,7 +27,7 @@ window.RecordDetailPage = {
         <h3 style="margin-bottom:12px;color:#1a73e8">Step {{step.step_number}}: {{step.title}}</h3>
         <el-descriptions :column="1" border>
           <el-descriptions-item v-for="f in step.fields" :key="f.id" :label="f.label">
-            {{getFieldValue(f)}}
+            <span v-html="getFieldValue(f)"></span>
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -57,15 +57,10 @@ window.RecordDetailPage = {
         this.record = data.record;
         this.feedbacks = data.feedbacks || [];
 
-        // 获取表单模板结构
-        const template = data.template
-          ? await api.get('/forms/' + data.template.id)
-          : { steps: [] };
-
-        // 按 field_key 映射值
+        // 后端返回的 values 按 field_key 做映射
         const valueMap = {};
         (data.values || []).forEach(v => {
-          const key = v.field ? v.field.field_key : v.field_key;
+          const key = v.field ? v.field.field_key : null;
           if (key) {
             let val = v.value;
             try { val = JSON.parse(val); } catch (e) {}
@@ -73,13 +68,12 @@ window.RecordDetailPage = {
           }
         });
 
-        // 构建步骤和字段（含值）
-        this.formSteps = (template.steps || []).map(s => ({
+        // 从 steps + fields 构建表单数据
+        this.formSteps = (data.steps || []).map(s => ({
           ...s,
-          fields: (s.fields || []).map(f => ({
-            ...f,
-            _value: valueMap[f.field_key] || valueMap[f.key],
-          })),
+          fields: (data.fields || [])
+            .filter(f => f.step_id === s.id)
+            .map(f => ({ ...f, _value: valueMap[f.field_key] })),
         }));
       } catch (e) { ElementPlus.ElMessage.error(e.message); }
     },
@@ -87,7 +81,6 @@ window.RecordDetailPage = {
       const val = field._value;
       if (val === undefined || val === null || val === '') return '<span style="color:#999">未填写</span>';
 
-      // 多选：尝试解析 JSON 字符串
       if (field.field_type === 'multi_select') {
         let arr = val;
         if (typeof val === 'string') { try { arr = JSON.parse(val); } catch (e) { arr = [val]; } }
@@ -95,14 +88,11 @@ window.RecordDetailPage = {
         const opts = typeof field.options === 'string' ? JSON.parse(field.options || '[]') : (field.options || []);
         return arr.map(v => { const o = opts.find(o => o.value === v); return o ? o.label : v; }).join(', ');
       }
-
-      // 单选：显示 label
       if (field.field_type === 'select') {
         const opts = typeof field.options === 'string' ? JSON.parse(field.options || '[]') : (field.options || []);
         const o = opts.find(o => o.value === val);
         return o ? o.label : val;
       }
-
       return val;
     },
     async updateStatus(status) {
