@@ -34,6 +34,8 @@
   wx:if="{{previewVisible}}"
   class="preview-mask"
   catchtap="closePreview"
+  catchtouchstart="onTouchStart"
+  catchtouchend="onTouchEnd"
 >
   <view class="preview-close" catchtap="closePreview">
     <text>✕</text>

@@ -10,7 +10,7 @@ Component({
     previewImageUrl: '',
     previewIndex: 0,
     previewPrevDisabled: true,
-    previewNextDisabled: false
+    previewNextDisabled: false,
   },
 
   observers: {
@@ -35,7 +35,6 @@ Component({
         return;
       }
 
-      // 找到当前预览的选项索引
       const options = this.properties.options || [];
       const idx = options.findIndex(o => {
         const targetUrl = o.image || o.thumb;
@@ -93,6 +92,23 @@ Component({
     },
 
     stopPreviewTap() {},
+
+    onTouchStart(e) {
+      this._touchStartX = e.touches[0].clientX;
+    },
+
+    onTouchEnd(e) {
+      const startX = this._touchStartX || 0;
+      const endX = e.changedTouches[0].clientX;
+      const deltaX = endX - startX;
+      const threshold = 50;
+
+      if (deltaX > threshold) {
+        if (!this.data.previewPrevDisabled) this.previewPrev();
+      } else if (deltaX < -threshold) {
+        if (!this.data.previewNextDisabled) this.previewNext();
+      }
+    },
 
     onImageLoad(e) {
       console.log('[field-template] image load success:', e.currentTarget.dataset.url);
