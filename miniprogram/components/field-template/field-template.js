@@ -7,7 +7,10 @@ Component({
   data: {
     currentValue: '',
     previewVisible: false,
-    previewImageUrl: ''
+    previewImageUrl: '',
+    previewIndex: 0,
+    previewPrevDisabled: true,
+    previewNextDisabled: false
   },
 
   observers: {
@@ -25,7 +28,6 @@ Component({
 
     onPreviewImage(e) {
       const url = e.currentTarget.dataset.url;
-
       console.log('[field-template] preview url:', url);
 
       if (!url) {
@@ -33,9 +35,53 @@ Component({
         return;
       }
 
+      // 找到当前预览的选项索引
+      const options = this.properties.options || [];
+      const idx = options.findIndex(o => {
+        const targetUrl = o.image || o.thumb;
+        return targetUrl === url;
+      });
+
       this.setData({
         previewVisible: true,
-        previewImageUrl: url
+        previewImageUrl: url,
+        previewIndex: idx >= 0 ? idx : 0,
+        previewPrevDisabled: idx <= 0,
+        previewNextDisabled: idx >= options.length - 1
+      });
+    },
+
+    previewPrev() {
+      const { previewIndex } = this.data;
+      const options = this.properties.options || [];
+      const newIdx = previewIndex - 1;
+      if (newIdx < 0) return;
+
+      const item = options[newIdx];
+      const url = item.image || item.thumb;
+
+      this.setData({
+        previewIndex: newIdx,
+        previewImageUrl: url,
+        previewPrevDisabled: newIdx <= 0,
+        previewNextDisabled: newIdx >= options.length - 1
+      });
+    },
+
+    previewNext() {
+      const { previewIndex } = this.data;
+      const options = this.properties.options || [];
+      const newIdx = previewIndex + 1;
+      if (newIdx >= options.length) return;
+
+      const item = options[newIdx];
+      const url = item.image || item.thumb;
+
+      this.setData({
+        previewIndex: newIdx,
+        previewImageUrl: url,
+        previewPrevDisabled: newIdx <= 0,
+        previewNextDisabled: newIdx >= options.length - 1
       });
     },
 

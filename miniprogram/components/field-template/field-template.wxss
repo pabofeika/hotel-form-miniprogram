@@ -89,7 +89,7 @@
 .preview-image {
   width: 100vw;
   height: 82vh;
-  transform: rotate(90deg) scale(1.5);
+  transform: rotate(90deg) scale(1.7);
   transform-origin: center center;
 }
 
@@ -109,4 +109,39 @@
   color: #fff;
   font-size: 32rpx;
   font-weight: 300;
+}
+
+/* 上/下一张箭头 */
+.preview-arrow {
+  position: fixed;
+  top: 50%;
+  z-index: 100000;
+  width: 80rpx;
+  height: 120rpx;
+  margin-top: -60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 72rpx;
+  font-weight: 300;
+  background: rgba(255,255,255,0.08);
+  transition: background 0.2s;
+}
+.preview-arrow:active { background: rgba(255,255,255,0.2); }
+.preview-arrow.prev { left: 0; border-radius: 0 12rpx 12rpx 0; }
+.preview-arrow.next { right: 0; border-radius: 12rpx 0 0 12rpx; }
+
+/* 页码 */
+.preview-pagination {
+  position: fixed;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100000;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 24rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 24rpx;
 }
