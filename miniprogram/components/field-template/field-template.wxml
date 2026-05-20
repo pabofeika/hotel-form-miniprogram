@@ -35,6 +35,9 @@
   class="preview-mask"
   catchtap="closePreview"
 >
+  <view class="preview-close" catchtap="closePreview">
+    <text>✕</text>
+  </view>
   <image
     class="preview-image"
     src="{{previewImageUrl}}"
