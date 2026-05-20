@@ -49,10 +49,10 @@
 
   <!-- 上/下一张 -->
   <view wx:if="{{!previewPrevDisabled}}" class="preview-arrow prev" catchtap="previewPrev">
-    <text>‹</text>
+    <text>▲ 上一个</text>
   </view>
   <view wx:if="{{!previewNextDisabled}}" class="preview-arrow next" catchtap="previewNext">
-    <text>›</text>
+    <text>▼ 下一个</text>
   </view>
 
   <!-- 页码 -->
