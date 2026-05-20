@@ -87,7 +87,7 @@
   justify-content: center;
 }
 .preview-image {
-  width: 100vh;
+  height: 750rpx;
   transform: rotate(90deg);
 }
 
