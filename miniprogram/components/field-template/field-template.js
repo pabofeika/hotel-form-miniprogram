@@ -94,18 +94,20 @@ Component({
     stopPreviewTap() {},
 
     onTouchStart(e) {
-      this._touchStartX = e.touches[0].clientX;
+      this._touchStartY = e.touches[0].clientY;
     },
 
     onTouchEnd(e) {
-      const startX = this._touchStartX || 0;
-      const endX = e.changedTouches[0].clientX;
-      const deltaX = endX - startX;
-      const threshold = 50;
+      const startY = this._touchStartY || 0;
+      const endY = e.changedTouches[0].clientY;
+      const deltaY = endY - startY;
+      const threshold = 60;
 
-      if (deltaX > threshold) {
+      if (deltaY > threshold) {
+        // 下滑 → 上一个
         if (!this.data.previewPrevDisabled) this.previewPrev();
-      } else if (deltaX < -threshold) {
+      } else if (deltaY < -threshold) {
+        // 上滑 → 下一个
         if (!this.data.previewNextDisabled) this.previewNext();
       }
     },
