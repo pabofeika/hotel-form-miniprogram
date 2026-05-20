@@ -34,31 +34,36 @@
   wx:if="{{previewVisible}}"
   class="preview-mask"
   catchtap="closePreview"
-  catchtouchstart="onTouchStart"
-  catchtouchend="onTouchEnd"
 >
+  <!-- 关闭按钮 -->
   <view class="preview-close" catchtap="closePreview">
     <text>✕</text>
   </view>
-  <image
-    class="preview-image"
-    src="{{previewImageUrl}}"
-    mode="aspectFit"
-    catchtap="closePreview"
-    bindload="onPreviewImageLoad"
-    binderror="onPreviewImageError"
-  />
 
-  <!-- 上/下一张 -->
-  <view wx:if="{{!previewPrevDisabled}}" class="preview-arrow prev" catchtap="previewPrev">
-    <text>▲ 上一个</text>
-  </view>
-  <view wx:if="{{!previewNextDisabled}}" class="preview-arrow next" catchtap="previewNext">
-    <text>▼ 下一个</text>
-  </view>
+  <view class="preview-content" catchtap="stopPreviewTap">
+    <image
+      class="preview-image"
+      src="{{previewImageUrl}}"
+      mode="aspectFit"
+      bindtouchstart="onTouchStart"
+      bindtouchend="onTouchEnd"
+      bindload="onPreviewImageLoad"
+      binderror="onPreviewImageError"
+    />
 
-  <!-- 页码 -->
-  <view class="preview-pagination">
-    <text>{{previewIndex + 1}} / {{options.length}}</text>
+    <button
+      class="preview-nav preview-prev {{previewPrevDisabled ? 'disabled' : ''}}"
+      disabled="{{previewPrevDisabled}}"
+      catchtap="previewPrev"
+    ></button>
+
+    <button
+      class="preview-nav preview-next {{previewNextDisabled ? 'disabled' : ''}}"
+      disabled="{{previewNextDisabled}}"
+      catchtap="previewNext"
+    ></button>
+
+    <!-- 页码 -->
+    <view class="preview-pagination">{{previewIndex + 1}} / {{options.length}}</view>
   </view>
 </view>
