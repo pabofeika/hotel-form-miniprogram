@@ -42,7 +42,7 @@
     class="preview-image"
     src="{{previewImageUrl}}"
     mode="aspectFit"
-    catchtap="stopPreviewTap"
+    catchtap="closePreview"
     bindload="onPreviewImageLoad"
     binderror="onPreviewImageError"
   />

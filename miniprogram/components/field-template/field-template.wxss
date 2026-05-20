@@ -11,12 +11,32 @@
   background: var(--color-bg-card);
   border: 2rpx solid var(--color-border);
   border-radius: var(--radius-lg);
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 .template-option.active {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3rpx var(--color-border-active);
+  background: var(--color-bg-hover);
+  box-shadow: 0 0 0 4rpx var(--color-border-active), var(--shadow-md);
+}
+.template-option.active::after {
+  content: '✓';
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 32rpx;
+  height: 32rpx;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 20rpx;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
 }
 
 .template-thumb {
@@ -67,7 +87,8 @@
   justify-content: center;
 }
 .preview-image {
-  width: 100vw;
+  width: 100vh;
+  transform: rotate(90deg);
 }
 
 /* 关闭按钮 */
