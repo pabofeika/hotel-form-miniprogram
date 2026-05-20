@@ -1,7 +1,21 @@
 Component({
-  properties: { options: { type: Array, value: [] }, value: { type: null, value: '' } },
-  data: { currentValue: '' },
-  observers: { value(v) { this.setData({ currentValue: v || '' }); } },
+  properties: {
+    options: { type: Array, value: [] },
+    value: { type: null, value: '' }
+  },
+
+  data: {
+    currentValue: '',
+    previewVisible: false,
+    previewImageUrl: ''
+  },
+
+  observers: {
+    value(v) {
+      this.setData({ currentValue: v || '' });
+    }
+  },
+
   methods: {
     onSelect(e) {
       const val = e.currentTarget.dataset.value;
@@ -11,7 +25,7 @@ Component({
 
     onPreviewImage(e) {
       const url = e.currentTarget.dataset.url;
-      console.log('[field-template] options:', JSON.stringify(this.properties.options));
+
       console.log('[field-template] preview url:', url);
 
       if (!url) {
@@ -19,30 +33,20 @@ Component({
         return;
       }
 
-      wx.showLoading({ title: '加载图片' });
-
-      wx.getImageInfo({
-        src: url,
-        success: (res) => {
-          console.log('[field-template] getImageInfo success:', res.path);
-          wx.hideLoading();
-
-          wx.previewImage({
-            current: res.path,
-            urls: [res.path],
-            fail: (err) => {
-              console.error('[field-template] previewImage fail:', err);
-              wx.showToast({ title: '图片预览失败', icon: 'none' });
-            },
-          });
-        },
-        fail: (err) => {
-          wx.hideLoading();
-          console.error('[field-template] getImageInfo fail:', err);
-          wx.showToast({ title: '图片读取失败', icon: 'none' });
-        },
+      this.setData({
+        previewVisible: true,
+        previewImageUrl: url
       });
     },
+
+    closePreview() {
+      this.setData({
+        previewVisible: false,
+        previewImageUrl: ''
+      });
+    },
+
+    stopPreviewTap() {},
 
     onImageLoad(e) {
       console.log('[field-template] image load success:', e.currentTarget.dataset.url);
@@ -51,9 +55,21 @@ Component({
     onImageError(e) {
       console.error('[field-template] image load error:', {
         url: e.currentTarget.dataset.url,
-        detail: e.detail,
+        detail: e.detail
       });
       wx.showToast({ title: '图片加载失败', icon: 'none' });
     },
-  },
+
+    onPreviewImageLoad() {
+      console.log('[field-template] preview image load success:', this.data.previewImageUrl);
+    },
+
+    onPreviewImageError(e) {
+      console.error('[field-template] preview image load error:', {
+        url: this.data.previewImageUrl,
+        detail: e.detail
+      });
+      wx.showToast({ title: '预览图片加载失败', icon: 'none' });
+    }
+  }
 });

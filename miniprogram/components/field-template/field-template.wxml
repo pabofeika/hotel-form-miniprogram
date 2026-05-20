@@ -1,19 +1,46 @@
-<view class="field-template">
-  <view class="template-list">
-    <view wx:for="{{options}}" wx:key="value" class="template-card {{item.value === currentValue ? 'active' : ''}}"
-      bindtap="onSelect" data-value="{{item.value}}">
-      <image class="template-image" src="{{item.thumb || item.image}}" mode="aspectFill"
-        data-url="{{item.image}}"
-        catchtap="onPreviewImage"
-        bindload="onImageLoad"
-        binderror="onImageError" />
-      <view class="template-content">
-        <text class="template-title">{{item.label}}</text>
-        <text wx:if="{{item.desc}}" class="template-desc">{{item.desc}}</text>
-      </view>
-      <view class="check-circle {{item.value === currentValue ? 'checked' : ''}}">
-        <text wx:if="{{item.value === currentValue}}">✓</text>
-      </view>
+<view class="template-options">
+  <view
+    wx:for="{{options}}"
+    wx:key="value"
+    class="template-option {{currentValue === item.value ? 'active' : ''}}"
+    data-value="{{item.value}}"
+    bindtap="onSelect"
+  >
+    <image
+      class="template-thumb"
+      src="{{item.thumb || item.image}}"
+      mode="aspectFill"
+      data-url="{{item.thumb || item.image}}"
+      bindload="onImageLoad"
+      binderror="onImageError"
+    />
+
+    <view class="template-info">
+      <view class="template-label">{{item.label}}</view>
+      <view class="template-desc">{{item.desc}}</view>
     </view>
+
+    <button
+      class="preview-btn"
+      data-url="{{item.image || item.thumb}}"
+      catchtap="onPreviewImage"
+    >
+      查看大图
+    </button>
   </view>
+</view>
+
+<view
+  wx:if="{{previewVisible}}"
+  class="preview-mask"
+  catchtap="closePreview"
+>
+  <image
+    class="preview-image"
+    src="{{previewImageUrl}}"
+    mode="aspectFit"
+    catchtap="stopPreviewTap"
+    bindload="onPreviewImageLoad"
+    binderror="onPreviewImageError"
+  />
 </view>
